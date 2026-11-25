@@ -17,6 +17,10 @@ export interface ConceptMetadata {
   difficulty: Difficulty;
   estimatedMinutes: number;
   tags: readonly string[];
+  /** One playful line shown under the title, e.g. "Spoiler: the ISS is falling." */
+  hook?: string;
+  /** Hand-drawn preview: SVG path data drawn in ink on the discovery card. */
+  doodle?: { viewBox: string; d: string };
 }
 
 export interface VariableDefinition {

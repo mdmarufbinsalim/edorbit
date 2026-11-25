@@ -1,19 +1,31 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
+import { Nav } from "@/components/layout/Nav";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import "./globals.css";
 
-const sans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
-const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
-
 export const metadata: Metadata = {
-  title: { default: "ORBITAL", template: "%s · ORBITAL" },
-  description: "Understand the mathematics. Explore the phenomenon. Experiment with the physics.",
+  title: { default: "Orbital", template: "%s · Orbital" },
+  description:
+    "Play with the physics of space. Fire cannons into orbit, slingshot past planets, and see why the Moon makes tides.",
 };
+
+// Light by default; dark is opt-in via the toggle and remembered.
+const themeInit = `(function(){try{if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark');}catch(e){}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
-      <body className="min-h-dvh font-sans">{children}</body>
+    <html lang="en" className="h-full" suppressHydrationWarning>
+      <head>
+        <Script id="theme-init" strategy="beforeInteractive">
+          {themeInit}
+        </Script>
+      </head>
+      <body className="flex min-h-full flex-col">
+        <SmoothScroll />
+        <Nav />
+        {children}
+      </body>
     </html>
   );
 }

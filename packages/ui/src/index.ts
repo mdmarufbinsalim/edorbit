@@ -11,3 +11,4 @@ export * from "./controls/ExperimentPanel";
 export * from "./lesson/Section";
 export * from "./lesson/SectionNav";
 export * from "./simulation/controller";
+export * from "./sketch";

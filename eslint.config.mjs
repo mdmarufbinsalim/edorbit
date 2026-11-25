@@ -3,7 +3,7 @@ import reactHooks from "eslint-plugin-react-hooks";
 import nextPlugin from "@next/eslint-plugin-next";
 
 /**
- * The most important boundary in ORBITAL: scientific code (core, physics)
+ * The most important boundary in EdOrbit: scientific code (core, physics)
  * must never depend on React, Three.js, or any UI layer.
  */
 const UI_IMPORTS = [
@@ -17,12 +17,12 @@ const UI_IMPORTS = [
   },
   {
     group: [
-      "@orbital/ui",
-      "@orbital/ui/*",
-      "@orbital/rendering",
-      "@orbital/rendering/*",
-      "@orbital/concepts",
-      "@orbital/concepts/*",
+      "@edorbit/ui",
+      "@edorbit/ui/*",
+      "@edorbit/rendering",
+      "@edorbit/rendering/*",
+      "@edorbit/concepts",
+      "@edorbit/concepts/*",
     ],
     message: "Scientific layers must not depend on UI, rendering, or concept packages.",
   },

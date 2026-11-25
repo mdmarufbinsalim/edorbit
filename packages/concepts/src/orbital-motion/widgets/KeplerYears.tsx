@@ -1,9 +1,9 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { AU, SUN } from "@orbital/core";
-import { orbitalPeriod } from "@orbital/physics";
-import { ParameterSlider, SketchPlanet, useRafLoop } from "@orbital/ui";
+import { AU, SUN } from "@edorbit/core";
+import { orbitalPeriod } from "@edorbit/physics";
+import { ParameterSlider, SketchPlanet, useRafLoop } from "@edorbit/ui";
 
 /** Kepler's 3rd law with the real Sun: drag a planet's distance, watch its year. */
 const YEAR = orbitalPeriod(SUN.mu, AU);

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { EARTH } from "@orbital/core/units/constants";
+import { EARTH } from "@edorbit/core/units/constants";
 import { length, dot } from "../common/vector";
 import { pointMassAcceleration } from "../gravity/newton";
 import { integrators, type IntegratorName, type PointState } from "./integrators";

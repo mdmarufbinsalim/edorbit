@@ -1,5 +1,5 @@
 {
-  "name": "@orbital/concepts",
+  "name": "@edorbit/concepts",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -12,10 +12,10 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@orbital/core": "workspace:*",
-    "@orbital/physics": "workspace:*",
-    "@orbital/rendering": "workspace:*",
-    "@orbital/ui": "workspace:*",
+    "@edorbit/core": "workspace:*",
+    "@edorbit/physics": "workspace:*",
+    "@edorbit/rendering": "workspace:*",
+    "@edorbit/ui": "workspace:*",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
     "framer-motion": "^14.14.0",

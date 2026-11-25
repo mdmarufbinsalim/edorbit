@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { EARTH, SUN, AU } from "@orbital/core/units/constants";
+import { EARTH, SUN, AU } from "@edorbit/core/units/constants";
 import {
   circularSpeed,
   classifyOrbit,

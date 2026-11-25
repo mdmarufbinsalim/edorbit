@@ -1,4 +1,4 @@
-# Contributing to ORBITAL
+# Contributing to EdOrbit
 
 Thanks for helping make big ideas, from any subject, something people can see, poke at and understand.
 
@@ -27,7 +27,7 @@ Concepts can come from any subject: STEM, history, the arts and more. Every clai
 
 ## Contribution safety
 
-Concepts are reviewed TypeScript modules bundled at build time. ORBITAL never loads or executes community code at runtime.
+Concepts are reviewed TypeScript modules bundled at build time. EdOrbit never loads or executes community code at runtime.
 
 ## Assets
 

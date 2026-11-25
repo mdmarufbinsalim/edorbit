@@ -1,4 +1,4 @@
-import { ConceptRegistry } from "@orbital/core";
+import { ConceptRegistry } from "@edorbit/core";
 import type { ConceptEntry } from "./types";
 import { orbitalMotion } from "./orbital-motion";
 

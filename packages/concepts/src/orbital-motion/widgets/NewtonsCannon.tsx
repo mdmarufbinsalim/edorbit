@@ -2,7 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ParameterSlider, SketchPlanet, useRafLoop } from "@orbital/ui";
+import { ParameterSlider, SketchPlanet, useRafLoop } from "@edorbit/ui";
 import { BODY_RADIUS } from "../model";
 
 import { ALTITUDE, EARTH_PX, VIEW, simulateShot, toSvg } from "./cannon-physics";

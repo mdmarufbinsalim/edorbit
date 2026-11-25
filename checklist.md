@@ -1,6 +1,6 @@
-# Orbital — Development Checklist
+# EdOrbit — Development Checklist
 
-Orbital is an open-source platform of **interactive concepts from any field**: physics, maths, computer science, chemistry, biology, history, economics, music and beyond. Each concept is a short, playful story for teens and early learners. You drag, try, predict and break things, and it is all backed by real models and real sources.
+EdOrbit is an open-source platform of **interactive concepts from any field**: physics, maths, computer science, chemistry, biology, history, economics, music and beyond. Each concept is a short, playful story for teens and early learners. You drag, try, predict and break things, and it is all backed by real models and real sources.
 
 Orbital Motion is the first concept and the reference implementation. It is not the scope of the platform.
 
@@ -68,7 +68,7 @@ The contract still assumes every concept is a numerical simulation. Generalise i
 
 ### Discovery
 
-- [x] Geometric Orbital logo and adaptive SVG favicon
+- [x] Geometric EdOrbit logo and adaptive SVG favicon
 
 - [x] Tag system: curated tag vocabulary (subject, topic, skill), tags on every concept, validated against the vocabulary
 - [x] Filter the discovery page by tag; tag chips on cards and concept pages link to filtered views

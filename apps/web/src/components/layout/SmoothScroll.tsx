@@ -36,11 +36,11 @@ export function SmoothScroll() {
     };
     const onResize = () => lenis.resize();
     document.addEventListener("click", onClick);
-    window.addEventListener("orbital:scroll-to", onScrollTo);
+    window.addEventListener("edorbit:scroll-to", onScrollTo);
     document.addEventListener("transitionend", onResize, true);
     return () => {
       document.removeEventListener("click", onClick);
-      window.removeEventListener("orbital:scroll-to", onScrollTo);
+      window.removeEventListener("edorbit:scroll-to", onScrollTo);
       document.removeEventListener("transitionend", onResize, true);
       cancelAnimationFrame(raf);
       lenis.destroy();
@@ -60,5 +60,5 @@ export function SmoothScroll() {
 export function scrollToElement(el: HTMLElement | null) {
   if (!el) return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) el.scrollIntoView();
-  else window.dispatchEvent(new CustomEvent("orbital:scroll-to", { detail: el }));
+  else window.dispatchEvent(new CustomEvent("edorbit:scroll-to", { detail: el }));
 }

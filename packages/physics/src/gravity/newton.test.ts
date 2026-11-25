@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { EARTH } from "@orbital/core/units/constants";
+import { EARTH } from "@edorbit/core/units/constants";
 import { length } from "../common/vector";
 import { gravitationalForce, pointMassAcceleration } from "./newton";
 

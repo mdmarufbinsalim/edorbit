@@ -1,5 +1,5 @@
 import { createStore, type StoreApi } from "zustand/vanilla";
-import { SimulationEngine, type NumericParams, type SimulationSpec } from "@orbital/core";
+import { SimulationEngine, type NumericParams, type SimulationSpec } from "@edorbit/core";
 
 export interface SimulationUIState<Params extends NumericParams> {
   params: Params;

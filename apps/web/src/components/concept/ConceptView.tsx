@@ -4,9 +4,9 @@ import { Suspense, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { useStore } from "zustand";
 import Link from "next/link";
-import { conceptRegistry, tagById, type AnyConceptModule } from "@orbital/concepts";
+import { conceptRegistry, tagById, type AnyConceptModule } from "@edorbit/concepts";
 import { tagHref } from "@/components/discovery/tag-links";
-import type { StoryChapter } from "@orbital/core";
+import type { StoryChapter } from "@edorbit/core";
 import {
   EquationCard,
   Expandable,
@@ -22,7 +22,7 @@ import {
   SketchUnderline,
   tagChipClass,
   createSimulationController,
-} from "@orbital/ui";
+} from "@edorbit/ui";
 
 /**
  * Generic learning page: hook → story → formula → playground → missions → nerd corner.

@@ -1,7 +1,7 @@
 "use client";
 
 import { useFrame } from "@react-three/fiber";
-import type { SimulationEngine } from "@orbital/core";
+import type { SimulationEngine } from "@edorbit/core";
 
 /**
  * Drives the engine from the render loop. Real frame time is clamped so a

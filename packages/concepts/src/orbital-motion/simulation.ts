@@ -1,5 +1,5 @@
-import type { SimulationSpec } from "@orbital/core";
-import { length, type TwoBodyState } from "@orbital/physics";
+import type { SimulationSpec } from "@edorbit/core";
+import { length, type TwoBodyState } from "@edorbit/physics";
 import {
   BODY_RADIUS,
   MU,

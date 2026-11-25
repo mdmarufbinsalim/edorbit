@@ -1,5 +1,5 @@
-import { EARTH, type CalculatorDefinition, type FeaturedFormula } from "@orbital/core";
-import { circularSpeed, orbitalPeriod } from "@orbital/physics";
+import { EARTH, type CalculatorDefinition, type FeaturedFormula } from "@edorbit/core";
+import { circularSpeed, orbitalPeriod } from "@edorbit/physics";
 
 const km = 1000;
 const r = (altitudeKm: number) => EARTH.meanRadius + altitudeKm * km;

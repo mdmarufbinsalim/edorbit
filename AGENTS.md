@@ -10,13 +10,13 @@ Rules for AI coding agents (Claude Code, Codex, Copilot, etc.) working in this r
 ## Tooling
 
 - **Use pnpm for everything.** Never run `npm` or `yarn` (no `npm install`, `npm run`, `npx`, `npm view`). Use `pnpm install`, `pnpm add`, `pnpm <script>`, `pnpm exec`, `pnpm dlx`, `pnpm view`.
-- Add dependencies to the workspace package that uses them: `pnpm --filter @orbital/<pkg> add <dep>`. Root-level (`-w`) is for shared dev tooling only.
+- Add dependencies to the workspace package that uses them: `pnpm --filter @edorbit/<pkg> add <dep>`. Root-level (`-w`) is for shared dev tooling only.
 - Before finishing work, run: `pnpm typecheck && pnpm lint && pnpm test`.
 
 ## Architecture boundaries
 
-- Orbital covers concepts from any subject (STEM, history, arts, …), not just physics. Keep shared code subject-agnostic.
-- `packages/core` and domain packages (`packages/physics`, future `packages/<domain>`) must never import React, Three.js, or `@orbital/{ui,rendering,concepts}`. ESLint enforces this.
+- EdOrbit covers concepts from any subject (STEM, history, arts, …), not just physics. Keep shared code subject-agnostic.
+- `packages/core` and domain packages (`packages/physics`, future `packages/<domain>`) must never import React, Three.js, or `@edorbit/{ui,rendering,concepts}`. ESLint enforces this.
 - Widgets and scenes display model or source data; they never compute or invent results.
 - Numerical models use SI units internally. Scale for display only.
 - Content is for teens and early learners: short, plain language, no emojis. See docs/content-standards.md.

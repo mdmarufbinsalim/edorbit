@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { conceptRegistry, tagVocabulary } from "@orbital/concepts";
+import { conceptRegistry, tagVocabulary } from "@edorbit/concepts";
 import { ConceptBrowser, type BrowsableConcept } from "@/components/discovery/ConceptBrowser";
 import { Hero } from "@/components/discovery/Hero";
 

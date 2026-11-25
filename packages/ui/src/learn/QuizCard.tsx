@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import type { Quiz } from "@orbital/core";
+import type { Quiz } from "@edorbit/core";
 import { RichText } from "../components/RichText";
 import { SketchCircle } from "../sketch/SketchCircle";
 

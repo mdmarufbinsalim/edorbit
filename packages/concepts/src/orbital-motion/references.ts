@@ -1,4 +1,4 @@
-import type { ScientificReference } from "@orbital/core";
+import type { ScientificReference } from "@edorbit/core";
 
 export const references: readonly ScientificReference[] = [
   {

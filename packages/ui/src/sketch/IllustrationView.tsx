@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { Illustration } from "@orbital/core";
+import type { Illustration } from "@edorbit/core";
 import { SKETCH_STROKE } from "./stroke";
 
 /** Draws a data-only illustration stroke by stroke when it scrolls into view. */

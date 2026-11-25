@@ -1,5 +1,5 @@
 {
-  "name": "orbital",
+  "name": "edorbit",
   "private": true,
   "description": "Open-source interactive science education platform: understand the mathematics, explore the phenomenon, experiment with the physics.",
   "license": "MIT",
@@ -9,14 +9,14 @@
     "node": ">=22"
   },
   "scripts": {
-    "dev": "pnpm --filter @orbital/web dev",
-    "build": "pnpm --filter @orbital/web build",
-    "start": "pnpm --filter @orbital/web start",
+    "dev": "pnpm --filter @edorbit/web dev",
+    "build": "pnpm --filter @edorbit/web build",
+    "start": "pnpm --filter @edorbit/web start",
     "lint": "eslint .",
     "typecheck": "pnpm -r typecheck",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "pnpm --filter @orbital/web test:e2e",
+    "test:e2e": "pnpm --filter @edorbit/web test:e2e",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

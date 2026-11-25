@@ -1,4 +1,4 @@
-import type { EquationDefinition } from "@orbital/core";
+import type { EquationDefinition } from "@edorbit/core";
 import { Equation } from "./Equation";
 import { RichText } from "../components/RichText";
 

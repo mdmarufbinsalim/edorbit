@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import type { MissionDefinition } from "@orbital/core";
+import type { MissionDefinition } from "@edorbit/core";
 import { RichText } from "../components/RichText";
 import { SketchCheck } from "../sketch/SketchCheck";
 

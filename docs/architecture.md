@@ -1,6 +1,6 @@
 # Architecture
 
-Orbital separates **what is true** (models and data), **how it is shown** (rendering and widgets) and **how it is taught** (the story). That separation is what lets a physics concept and a history concept share one platform.
+EdOrbit separates **what is true** (models and data), **how it is shown** (rendering and widgets) and **how it is taught** (the story). That separation is what lets a physics concept and a history concept share one platform.
 
 ## Packages and allowed dependencies
 
@@ -12,11 +12,11 @@ apps/web ──► concepts ──► ui, rendering ──► core
 
 | Package              | Responsibility                                                     | May import                            |
 | -------------------- | ------------------------------------------------------------------ | ------------------------------------- |
-| `@orbital/core`      | Concept contract, validation, simulation engine, units, formatting | nothing internal                      |
-| `@orbital/physics`   | Pure physics models and integrators (first domain package)         | `core`                                |
-| `@orbital/rendering` | Reusable R3F components                                            | `core`, React, Three.js               |
-| `@orbital/ui`        | Sketch design system, story components, controls                   | `core`, React                         |
-| `@orbital/concepts`  | Concept modules: story, widgets, models, scenes, missions          | all of the above                      |
+| `@edorbit/core`      | Concept contract, validation, simulation engine, units, formatting | nothing internal                      |
+| `@edorbit/physics`   | Pure physics models and integrators (first domain package)         | `core`                                |
+| `@edorbit/rendering` | Reusable R3F components                                            | `core`, React, Three.js               |
+| `@edorbit/ui`        | Sketch design system, story components, controls                   | `core`, React                         |
+| `@edorbit/concepts`  | Concept modules: story, widgets, models, scenes, missions          | all of the above                      |
 | `apps/web`           | Routing, layout, discovery, theme                                  | `concepts`, `ui`, `rendering`, `core` |
 
 **Domain packages** (`physics`, and later `maths`, `history`, …) contain pure, tested logic or data. They must never import React, Three.js or UI packages. ESLint enforces this for `core` and `physics` today. Generalising the rule to every domain package is tracked in the checklist.

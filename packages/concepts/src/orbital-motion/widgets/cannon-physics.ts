@@ -1,5 +1,5 @@
-import { sampleTrajectory } from "@orbital/core";
-import { length, type Vec3 } from "@orbital/physics";
+import { sampleTrajectory } from "@edorbit/core";
+import { length, type Vec3 } from "@edorbit/physics";
 import { BODY_RADIUS, createModel, formatDuration, initialElements } from "../model";
 
 /** Newton's thought experiment: same launch point, different speeds, real two-body physics. */

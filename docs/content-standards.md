@@ -1,6 +1,6 @@
 # Content standards
 
-Orbital explains things to teens and early learners. It must be **fun, short and correct**, in that order of visibility and the reverse order of importance.
+EdOrbit explains things to teens and early learners. It must be **fun, short and correct**, in that order of visibility and the reverse order of importance.
 
 ## Every concept
 
@@ -19,7 +19,7 @@ Orbital explains things to teens and early learners. It must be **fun, short and
 - Include at least one validation test against a known result (e.g. the ISS period, Earth's year).
 - Choose numerical methods deliberately and document their limits (see below).
 
-### Integrators available in `@orbital/physics`
+### Integrators available in `@edorbit/physics`
 
 | Integrator       | Order | Symplectic | Notes                                                                        |
 | ---------------- | ----- | ---------- | ---------------------------------------------------------------------------- |

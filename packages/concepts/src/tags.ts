@@ -1,4 +1,4 @@
-import type { TagDefinition } from "@orbital/core";
+import type { TagDefinition } from "@edorbit/core";
 
 /**
  * The shared tag vocabulary. Add tags here (not ad hoc in a concept) so

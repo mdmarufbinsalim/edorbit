@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { validateConcept, validateTags } from "@orbital/core";
+import { validateConcept, validateTags } from "@edorbit/core";
 import { tagVocabulary } from "./tags";
 import { conceptRegistry } from "./registry";
 

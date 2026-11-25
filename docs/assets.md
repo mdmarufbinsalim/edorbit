@@ -1,6 +1,6 @@
 # Third-party assets
 
-Record every texture, model, image, or font used in ORBITAL with its source and licence. Assets must be compatible with MIT redistribution.
+Record every texture, model, image, or font used in EdOrbit with its source and licence. Assets must be compatible with MIT redistribution.
 
 | Asset                    | Used in            | Source                         | Licence                   |
 | ------------------------ | ------------------ | ------------------------------ | ------------------------- |

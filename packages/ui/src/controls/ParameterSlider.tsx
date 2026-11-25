@@ -1,7 +1,7 @@
 "use client";
 
 import { useId } from "react";
-import { formatSig } from "@orbital/core";
+import { formatSig } from "@edorbit/core";
 
 export interface ParameterSliderProps {
   label: string;

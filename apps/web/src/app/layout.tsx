@@ -5,7 +5,7 @@ import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: { default: "Orbital", template: "%s · Orbital" },
+  title: { default: "EdOrbit", template: "%s · EdOrbit" },
   description:
     "Interactive stories that explain big ideas from science, maths, history and beyond. Drag, try, and see why things work.",
 };

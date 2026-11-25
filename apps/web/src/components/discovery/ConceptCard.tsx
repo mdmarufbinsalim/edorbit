@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import type { ConceptMetadata, TagDefinition } from "@orbital/core";
-import { IllustrationView, SketchBox, tagChipClass } from "@orbital/ui";
+import type { ConceptMetadata, TagDefinition } from "@edorbit/core";
+import { IllustrationView, SketchBox, tagChipClass } from "@edorbit/ui";
 import { tagHref } from "./tag-links";
 
 export function ConceptCard({

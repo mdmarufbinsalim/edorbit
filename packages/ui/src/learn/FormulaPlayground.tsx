@@ -7,7 +7,7 @@ import {
   type CalculatorDefinition,
   type FeaturedFormula,
   type EquationDefinition,
-} from "@orbital/core";
+} from "@edorbit/core";
 import { Equation } from "../equations/Equation";
 import { RichText } from "../components/RichText";
 import { SketchCircle } from "../sketch/SketchCircle";

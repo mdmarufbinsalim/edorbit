@@ -1,4 +1,4 @@
-import type { EquationDefinition } from "@orbital/core";
+import type { EquationDefinition } from "@edorbit/core";
 
 const mu = {
   symbol: "\\mu",

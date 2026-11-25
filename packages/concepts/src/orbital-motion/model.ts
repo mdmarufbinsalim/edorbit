@@ -1,11 +1,11 @@
-import { EARTH, type ScientificModel } from "@orbital/core";
+import { EARTH, type ScientificModel } from "@edorbit/core";
 import {
   createTwoBodyModel,
   elementsFromState,
   type OrbitalElements,
   type TwoBodyState,
   type Vec3,
-} from "@orbital/physics";
+} from "@edorbit/physics";
 
 /** User-facing parameters, SI units. Launch is from the +x axis in the x–y plane. */
 export type OrbitalMotionParams = {

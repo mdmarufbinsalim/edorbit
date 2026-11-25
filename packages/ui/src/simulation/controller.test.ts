@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { SimulationSpec } from "@orbital/core";
+import type { SimulationSpec } from "@edorbit/core";
 import { createSimulationController } from "./controller";
 
 const spec: SimulationSpec<number, { v: number }> = {

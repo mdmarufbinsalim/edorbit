@@ -1,5 +1,5 @@
 /**
- * Orbital mark: a planet with a tilted ring that passes behind it at the top
+ * EdOrbit mark: a planet with a tilted ring that passes behind it at the top
  * and in front of it at the bottom, and a small moon riding the ring.
  */
 export function Logo({ size = 30, className = "" }: { size?: number; className?: string }) {

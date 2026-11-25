@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { formatSig, type ReadoutDefinition, type SimulationEngine } from "@orbital/core";
+import { formatSig, type ReadoutDefinition, type SimulationEngine } from "@edorbit/core";
 
 /** Polls the engine at a modest rate so values update without per-frame React renders. */
 export function ReadoutPanel<State, Params>({

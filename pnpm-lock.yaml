@@ -44,16 +44,16 @@ importers:
 
   apps/web:
     dependencies:
-      '@orbital/concepts':
+      '@edorbit/concepts':
         specifier: workspace:*
         version: link:../../packages/concepts
-      '@orbital/core':
+      '@edorbit/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@orbital/rendering':
+      '@edorbit/rendering':
         specifier: workspace:*
         version: link:../../packages/rendering
-      '@orbital/ui':
+      '@edorbit/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@react-three/drei':
@@ -108,16 +108,16 @@ importers:
 
   packages/concepts:
     dependencies:
-      '@orbital/core':
+      '@edorbit/core':
         specifier: workspace:*
         version: link:../core
-      '@orbital/physics':
+      '@edorbit/physics':
         specifier: workspace:*
         version: link:../physics
-      '@orbital/rendering':
+      '@edorbit/rendering':
         specifier: workspace:*
         version: link:../rendering
-      '@orbital/ui':
+      '@edorbit/ui':
         specifier: workspace:*
         version: link:../ui
       '@react-three/drei':
@@ -150,13 +150,13 @@ importers:
 
   packages/physics:
     dependencies:
-      '@orbital/core':
+      '@edorbit/core':
         specifier: workspace:*
         version: link:../core
 
   packages/rendering:
     dependencies:
-      '@orbital/core':
+      '@edorbit/core':
         specifier: workspace:*
         version: link:../core
       '@react-three/drei':
@@ -181,7 +181,7 @@ importers:
 
   packages/ui:
     dependencies:
-      '@orbital/core':
+      '@edorbit/core':
         specifier: workspace:*
         version: link:../core
       framer-motion:

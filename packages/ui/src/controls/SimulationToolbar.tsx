@@ -1,6 +1,6 @@
 "use client";
 
-import type { TimeScaleOption } from "@orbital/core";
+import type { TimeScaleOption } from "@edorbit/core";
 
 export interface SimulationToolbarProps {
   playing: boolean;

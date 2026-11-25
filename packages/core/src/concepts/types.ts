@@ -1,7 +1,7 @@
 /**
  * Declarative concept contracts. These types are framework-agnostic so that
  * lesson content can be validated and rendered by any front end. The React
- * scene for a concept lives in @orbital/concepts, not here.
+ * scene for a concept lives in @edorbit/concepts, not here.
  */
 
 export type Difficulty = "beginner" | "intermediate" | "advanced";

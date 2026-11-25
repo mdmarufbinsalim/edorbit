@@ -1,4 +1,4 @@
-import type { ConceptMetadata } from "@orbital/core";
+import type { ConceptMetadata } from "@edorbit/core";
 
 export const metadata: ConceptMetadata = {
   id: "orbital-motion",

@@ -1,4 +1,4 @@
-import type { MissionDefinition } from "@orbital/core";
+import type { MissionDefinition } from "@edorbit/core";
 import { hitsGround, initialElements, type OrbitalMotionParams } from "./model";
 
 const hours = (s: number) => s / 3600;

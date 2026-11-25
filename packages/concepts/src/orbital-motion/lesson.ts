@@ -1,4 +1,4 @@
-import type { LessonDefinition } from "@orbital/core";
+import type { LessonDefinition } from "@edorbit/core";
 
 export const lesson: LessonDefinition = {
   story: [

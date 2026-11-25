@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { EARTH } from "@orbital/core";
-import { orbitalPeriod } from "@orbital/physics";
+import { EARTH } from "@edorbit/core";
+import { orbitalPeriod } from "@edorbit/physics";
 import { calculators, formula } from "./calculators";
 import { lesson } from "./lesson";
 import { missions } from "./missions";

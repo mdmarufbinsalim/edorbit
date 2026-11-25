@@ -1,5 +1,5 @@
 {
-  "name": "@orbital/web",
+  "name": "@edorbit/web",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,10 +11,10 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "@orbital/concepts": "workspace:*",
-    "@orbital/core": "workspace:*",
-    "@orbital/rendering": "workspace:*",
-    "@orbital/ui": "workspace:*",
+    "@edorbit/concepts": "workspace:*",
+    "@edorbit/core": "workspace:*",
+    "@edorbit/rendering": "workspace:*",
+    "@edorbit/ui": "workspace:*",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
     "framer-motion": "^14.14.0",

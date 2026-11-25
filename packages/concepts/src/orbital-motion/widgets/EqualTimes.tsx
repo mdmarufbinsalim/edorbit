@@ -1,9 +1,9 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { sampleTrajectory } from "@orbital/core";
-import { length, type Vec3 } from "@orbital/physics";
-import { ParameterSlider, SketchPlanet, useRafLoop } from "@orbital/ui";
+import { sampleTrajectory } from "@edorbit/core";
+import { length, type Vec3 } from "@edorbit/physics";
+import { ParameterSlider, SketchPlanet, useRafLoop } from "@edorbit/ui";
 import { BODY_RADIUS, createModel, initialElements, speedForEccentricity } from "../model";
 
 /** Kepler's 2nd law: dots dropped at equal time intervals on a real integrated ellipse. */

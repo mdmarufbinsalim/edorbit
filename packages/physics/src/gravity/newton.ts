@@ -1,4 +1,4 @@
-import { G } from "@orbital/core/units/constants";
+import { G } from "@edorbit/core/units/constants";
 import { length, scale, sub, type Vec3 } from "../common/vector";
 
 /** Magnitude of Newtonian gravitational force F = GMm / r², in newtons. */

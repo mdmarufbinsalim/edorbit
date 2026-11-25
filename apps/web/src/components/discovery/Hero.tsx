@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { SketchCircle, SketchUnderline } from "@orbital/ui";
+import { SketchCircle, SketchUnderline } from "@edorbit/ui";
 
 export function Hero() {
   return (

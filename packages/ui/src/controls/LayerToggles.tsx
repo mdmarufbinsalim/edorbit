@@ -1,6 +1,6 @@
 "use client";
 
-import type { VisualLayerDefinition } from "@orbital/core";
+import type { VisualLayerDefinition } from "@edorbit/core";
 
 /** Pill toggles for what's drawn in the scene. */
 export function LayerToggles({

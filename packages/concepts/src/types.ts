@@ -10,7 +10,7 @@ import type {
   SceneProps,
   ScientificReference,
   SimulationSpec,
-} from "@orbital/core";
+} from "@edorbit/core";
 
 /**
  * Everything a concept contributes. Story, equations, and references are

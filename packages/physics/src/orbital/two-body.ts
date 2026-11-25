@@ -1,4 +1,4 @@
-import type { ScientificModel } from "@orbital/core/simulation/types";
+import type { ScientificModel } from "@edorbit/core/simulation/types";
 import { length, type Vec3 } from "../common/vector";
 import { pointMassAcceleration } from "../gravity/newton";
 import { integrators, type IntegratorName, type PointState } from "../integration/integrators";

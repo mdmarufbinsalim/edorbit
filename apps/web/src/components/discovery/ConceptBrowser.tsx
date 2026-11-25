@@ -10,8 +10,8 @@ import {
   type ConceptMetadata,
   type TagDefinition,
   type TagKind,
-} from "@orbital/core";
-import { tagChipClass } from "@orbital/ui";
+} from "@edorbit/core";
+import { tagChipClass } from "@edorbit/ui";
 import { ConceptCard } from "./ConceptCard";
 import { tagHref } from "./tag-links";
 

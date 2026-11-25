@@ -1,8 +1,8 @@
-# Orbital
+# EdOrbit
 
 **Big ideas you can poke at.**
 
-Orbital is an open-source platform of interactive concepts from any field: physics, maths, computer science, chemistry, biology, history, economics, music and more. It is written for teens and early learners. Each concept is a short story with things to drag, try and break. Under the hood is a real model or a real source, never a fake animation.
+EdOrbit is an open-source platform of interactive concepts from any field: physics, maths, computer science, chemistry, biology, history, economics, music and more. It is written for teens and early learners. Each concept is a short story with things to drag, try and break. Under the hood is a real model or a real source, never a fake animation.
 
 The first concept, **Why don't satellites fall down?**, is the reference implementation. It has Newton's cannon, Kepler's laws, a 3D playground and missions that check themselves.
 

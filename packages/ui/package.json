@@ -1,5 +1,5 @@
 {
-  "name": "@orbital/ui",
+  "name": "@edorbit/ui",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -12,7 +12,7 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@orbital/core": "workspace:*",
+    "@edorbit/core": "workspace:*",
     "framer-motion": "^14.14.0",
     "katex": "^0.19.1",
     "react": "^19.3.1",

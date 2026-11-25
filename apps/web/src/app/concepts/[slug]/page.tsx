@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { conceptRegistry } from "@orbital/concepts";
+import { conceptRegistry } from "@edorbit/concepts";
 import { ConceptView } from "@/components/concept/ConceptView";
 
 export const dynamicParams = false;

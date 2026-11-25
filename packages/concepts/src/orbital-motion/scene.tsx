@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { sampleTrajectory, type SceneProps } from "@orbital/core";
-import { length, scale, type TwoBodyState } from "@orbital/physics";
+import { sampleTrajectory, type SceneProps } from "@edorbit/core";
+import { length, scale, type TwoBodyState } from "@edorbit/physics";
 import {
   Follow,
   SketchGlobe,
@@ -15,7 +15,7 @@ import {
   physicsToScene,
   useSimulationLoop,
   useThemeColors,
-} from "@orbital/rendering";
+} from "@edorbit/rendering";
 import {
   BODY_RADIUS,
   MU,

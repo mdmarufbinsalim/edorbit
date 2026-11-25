@@ -13,7 +13,7 @@ export default defineConfig({
       {
         test: {
           name: "ui",
-          include: ["packages/{ui,rendering}/**/*.test.tsx", "apps/web/src/**/*.test.tsx"],
+          include: ["packages/{ui,rendering}/**/*.test.{ts,tsx}", "apps/web/src/**/*.test.tsx"],
           environment: "jsdom",
         },
       },

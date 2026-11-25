@@ -34,6 +34,16 @@ export interface EquationDefinition {
   variables: readonly VariableDefinition[];
   assumptions?: readonly string[];
   validity?: string;
+  /** Intuition or derivation sketch, plain text with optional $inline math$. */
+  intuition?: string;
+  workedExample?: WorkedExample;
+}
+
+export interface WorkedExample {
+  prompt: string;
+  /** Each step is a LaTeX expression. */
+  steps: readonly string[];
+  result: string;
 }
 
 export interface LessonSection {
@@ -79,7 +89,38 @@ export interface ExperimentDefinition<Params = Record<string, number>> {
   /** Parameter overrides applied when the experiment starts. */
   setup: Partial<Params>;
   predictionPrompt: string;
+  /** Optional multiple-choice predictions; `answerIndex` marks the correct one. */
+  choices?: readonly string[];
+  answerIndex?: number;
+  /** Readout ids the user should watch while the experiment runs. */
+  watch?: readonly string[];
   explanation: string;
+}
+
+export interface CalculatorInput {
+  key: string;
+  label: string;
+  unit: string;
+  defaultValue: number;
+  min?: number;
+  max?: number;
+  step?: number;
+}
+
+export interface CalculatorOutput {
+  label: string;
+  unit: string;
+  /** Inputs are in the display units declared on each input. */
+  compute: (inputs: Readonly<Record<string, number>>) => number;
+}
+
+/** Interactive calculator bound to an equation. Changing an input recomputes outputs. */
+export interface CalculatorDefinition {
+  id: string;
+  equationId: string;
+  title: string;
+  inputs: readonly CalculatorInput[];
+  outputs: readonly CalculatorOutput[];
 }
 
 export interface ScientificReference {

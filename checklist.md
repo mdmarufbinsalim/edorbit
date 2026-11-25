@@ -29,8 +29,8 @@ Legend: `[x]` done · `[ ]` to do
 
 - [x] `ConceptMetadata`, `EquationDefinition`, `LessonDefinition`, `ParameterDefinition`, `ExperimentDefinition`, `ScientificReference`
 - [x] `ScientificModel<State, Params>` interface
-- [ ] `ConceptModule` type in `@orbital/concepts` binding metadata + lesson + equations + model factory + scene + experiments + references
-- [ ] Runtime validation of concept definitions (unique ids, equation ids referenced by lessons exist, parameter defaults within range)
+- [x] `ConceptModule` type in `@orbital/concepts` binding metadata + lesson + equations + model factory + scene + experiments + references
+- [x] Runtime validation of concept definitions (unique ids, equation ids referenced by lessons exist, parameter defaults within range)
 
 ### Units (`@orbital/core/units`)
 
@@ -43,9 +43,9 @@ Legend: `[x]` done · `[ ]` to do
 - [x] Fixed-timestep `SimulationClock` with time scale and step cap
 - [x] `SimulationEngine`: play / pause / reset / step-forward / snapshot
 - [x] Parameter change → model re-initialisation contract
-- [ ] Zustand store factory for per-concept simulation + UI state
+- [x] Zustand store factory for per-concept simulation + UI state
 - [ ] `useSimulationLoop` hook driving the engine from R3F `useFrame` without React rerenders
-- [ ] Web Worker path for expensive models
+- [x] Web Worker path for expensive models
 
 ### Numerical integration (`@orbital/physics/integration`)
 

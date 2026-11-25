@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { validateConcept } from "@orbital/core";
+import { validateConcept, validateTags } from "@orbital/core";
+import { tagVocabulary } from "./tags";
 import { conceptRegistry } from "./registry";
 
 describe("concept registry", () => {
@@ -7,6 +8,18 @@ describe("concept registry", () => {
     const slugs = conceptRegistry.list().map((c) => c.metadata.slug);
     expect(slugs.length).toBeGreaterThan(0);
     expect(new Set(slugs).size).toBe(slugs.length);
+  });
+
+  it.each(conceptRegistry.list())(
+    "$metadata.slug uses known tags with a subject",
+    ({ metadata }) => {
+      expect(validateTags(metadata.tags, tagVocabulary)).toEqual([]);
+    },
+  );
+
+  it("tag ids are unique", () => {
+    const ids = tagVocabulary.map((t) => t.id);
+    expect(new Set(ids).size).toBe(ids.length);
   });
 
   it.each(conceptRegistry.list().filter((e) => e.module))(

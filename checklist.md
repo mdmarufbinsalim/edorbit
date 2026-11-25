@@ -42,6 +42,7 @@ The contract still assumes every concept is a numerical simulation. Generalise i
 ### Contract
 
 - [ ] Make `simulation` and `Scene` optional. A concept can be story + widgets + missions only
+- [x] Missions explain the reasoning behind each goal (Explain button), separate from hints
 - [ ] Missions that check widget state or answers, not only simulation parameters
 - [ ] Rename science-specific types to neutral ones, keeping deprecated aliases: `ScientificModel` → `Model`, `ScientificReference` → `Source`
 - [ ] `Source` supports primary vs secondary sources, archives, dates, page/section, and licence
@@ -67,9 +68,11 @@ The contract still assumes every concept is a numerical simulation. Generalise i
 
 ### Discovery
 
-- [ ] Tag system: curated tag vocabulary (subject, topic, skill, era), tags on every concept, validated against the vocabulary
-- [ ] Filter the discovery page by tag; tag chips on cards and concept pages link to filtered views
-- [ ] Rich hand-drawn card illustrations (multi-stroke, animated, per concept) instead of single-path doodles
+- [x] Geometric Orbital logo and adaptive SVG favicon
+
+- [x] Tag system: curated tag vocabulary (subject, topic, skill), tags on every concept, validated against the vocabulary
+- [x] Filter the discovery page by tag; tag chips on cards and concept pages link to filtered views
+- [x] Rich hand-drawn card illustrations (multi-stroke, animated, per concept) instead of single-path doodles
 - [ ] Browse and filter by subject; subject landing pages
 - [ ] Search across titles, hooks and topics
 - [ ] "Related concepts" links between subjects (e.g. orbital motion ↔ the history of Kepler)

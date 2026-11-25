@@ -10,3 +10,4 @@ export * from "./learn/FormulaPlayground";
 export * from "./learn/MissionList";
 export * from "./simulation/controller";
 export * from "./sketch";
+export * from "./learn/TagChip";

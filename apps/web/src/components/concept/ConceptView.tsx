@@ -3,7 +3,9 @@
 import { Suspense, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { useStore } from "zustand";
-import { conceptRegistry, type AnyConceptModule } from "@orbital/concepts";
+import Link from "next/link";
+import { conceptRegistry, tagById, type AnyConceptModule } from "@orbital/concepts";
+import { tagHref } from "@/components/discovery/tag-links";
 import type { StoryChapter } from "@orbital/core";
 import {
   EquationCard,
@@ -18,6 +20,7 @@ import {
   SimulationToolbar,
   SketchBox,
   SketchUnderline,
+  tagChipClass,
   createSimulationController,
 } from "@orbital/ui";
 
@@ -179,6 +182,24 @@ function ConceptPage({ concept }: { concept: AnyConceptModule }) {
         >
           {metadata.hook ?? metadata.question}
         </motion.p>
+        <motion.ul
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="mt-6 flex flex-wrap gap-2"
+          aria-label="Tags"
+        >
+          {metadata.tags.map((id) => {
+            const tag = tagById.get(id);
+            return tag ? (
+              <li key={id}>
+                <Link href={tagHref([id])} className={tagChipClass()}>
+                  {tag.label}
+                </Link>
+              </li>
+            ) : null;
+          })}
+        </motion.ul>
         <motion.a
           href="#story"
           initial={{ opacity: 0 }}

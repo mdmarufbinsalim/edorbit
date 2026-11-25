@@ -17,7 +17,9 @@ const base: ValidatableConcept = {
   equations: [{ id: "eq", name: "Eq", latex: "x", description: "", variables: [] }],
   calculators: [{ id: "c", equationId: "eq", title: "", inputs: [], outputs: [] }],
   formula: { equationId: "eq", calculatorId: "c", tagline: "", symbols: [] },
-  missions: [{ id: "m", title: "", goal: "", hint: "", check: () => true, success: "" }],
+  missions: [
+    { id: "m", title: "", goal: "", hint: "", explain: "", check: () => true, success: "" },
+  ],
   defaultParameters: { v: 1 },
   parameterDefinitions: [{ key: "v", label: "v", unit: "", min: 0, max: 10, step: 1 }],
   visualLayers: [{ id: "l", label: "L", defaultVisible: true }],

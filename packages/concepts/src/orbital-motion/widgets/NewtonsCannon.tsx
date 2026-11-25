@@ -66,14 +66,15 @@ export default function NewtonsCannon() {
           strokeWidth={2.5}
           strokeLinejoin="round"
         />
-        <rect
-          x={-4}
-          y={launch[1] - 10}
-          width={18}
-          height={8}
-          rx={2}
-          fill="var(--ink)"
-          transform={`rotate(-8 0 ${launch[1]})`}
+        {/* Cannon seated on the peak, barrel pointing along the launch direction. */}
+        <rect x={-3} y={launch[1] - 7} width={18} height={6} rx={1.5} fill="var(--ink)" />
+        <circle
+          cx={1}
+          cy={launch[1] - 1}
+          r={3.5}
+          fill="var(--paper)"
+          stroke="var(--ink)"
+          strokeWidth={2}
         />
         <g clipPath="url(#cannon-sky)">
           {shots.slice(0, -1).map((s) => (

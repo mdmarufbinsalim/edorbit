@@ -7,3 +7,4 @@ export * from "./SketchCheck";
 export * from "./Expandable";
 export * from "./useRafLoop";
 export * from "./SketchPlanet";
+export * from "./IllustrationView";

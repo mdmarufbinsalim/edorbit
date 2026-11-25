@@ -45,6 +45,7 @@ describe("MissionList", () => {
             title: "Go fast",
             goal: "v > 3",
             hint: "",
+            explain: "Fast means big v.",
             check: (p: { v: number }) => p.v > 3,
             success: "Zoom!",
           },
@@ -53,6 +54,7 @@ describe("MissionList", () => {
             title: "Go slow",
             goal: "v < 1",
             hint: "Slow down",
+            explain: "",
             check: (p: { v: number }) => p.v < 1,
             success: "",
           },
@@ -60,7 +62,11 @@ describe("MissionList", () => {
       />,
     );
     expect(screen.getByText("1 of 2 missions complete")).toBeTruthy();
+    fireEvent.click(screen.getAllByRole("button", { name: "Explain" })[0]!);
+    expect(screen.getByText("Fast means big v.")).toBeTruthy();
     expect(screen.getByText("Zoom!")).toBeTruthy();
+    fireEvent.click(screen.getAllByRole("button", { name: "Explain" })[0]!);
+    expect(screen.getByText("Fast means big v.")).toBeTruthy();
   });
 });
 

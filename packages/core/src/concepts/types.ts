@@ -16,11 +16,32 @@ export interface ConceptMetadata {
   category: string;
   difficulty: Difficulty;
   estimatedMinutes: number;
+  /** Tag ids from the shared vocabulary (packages/concepts/src/tags.ts). Include at least one subject. */
   tags: readonly string[];
   /** One playful line shown under the title, e.g. "Spoiler: the ISS is falling." */
   hook?: string;
-  /** Hand-drawn preview: SVG path data drawn in ink on the discovery card. */
-  doodle?: { viewBox: string; d: string };
+  /** Hand-drawn card illustration, drawn in stroke by stroke. */
+  illustration?: Illustration;
+}
+
+/** One pen stroke of an illustration. Paths are drawn in order, `delay` adds to the stagger. */
+export interface IllustrationStroke {
+  d: string;
+  /** Stroke width, default 2.5 (the site's one pen). */
+  width?: number;
+  dashed?: boolean;
+  /** Fill with paper so strokes behind are hidden. */
+  fill?: boolean;
+  /** Use the muted ink colour for background detail. */
+  faint?: boolean;
+}
+
+/** Data-only SVG illustration, so cards stay concept-agnostic and serialisable. */
+export interface Illustration {
+  viewBox: string;
+  strokes: readonly IllustrationStroke[];
+  /** Accessible description of the picture. */
+  alt: string;
 }
 
 export interface VariableDefinition {
@@ -111,6 +132,8 @@ export interface MissionDefinition<Params = Record<string, number>> {
   title: string;
   goal: string;
   hint: string;
+  /** The physics (or reasoning) behind the goal, shown by the Explain button at any time. */
+  explain: string;
   check: (params: Params) => boolean;
   /** Celebration + the physics behind it, shown on success. */
   success: string;

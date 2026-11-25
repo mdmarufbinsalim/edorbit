@@ -62,7 +62,7 @@ export default function KeplerYears() {
           </g>
         ))}
         <circle r={a * PX} fill="none" stroke="var(--ink)" strokeWidth={2.5} />
-        <SketchPlanet r={10} seed={5} />
+        <SketchPlanet r={10} />
         <circle ref={earth} r={5} fill="var(--muted)" />
         <circle ref={you} r={8} fill="var(--paper)" stroke="var(--ink)" strokeWidth={2.5} />
       </svg>

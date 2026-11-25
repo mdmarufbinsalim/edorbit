@@ -2,69 +2,62 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import type { ConceptMetadata } from "@orbital/core";
-import { SketchBox } from "@orbital/ui";
+import type { ConceptMetadata, TagDefinition } from "@orbital/core";
+import { IllustrationView, SketchBox, tagChipClass } from "@orbital/ui";
+import { tagHref } from "./tag-links";
 
 export function ConceptCard({
   concept,
   available,
   index,
+  tags,
 }: {
   concept: ConceptMetadata;
   available: boolean;
   index: number;
+  tags: readonly TagDefinition[];
 }) {
-  const body = (
-    <SketchBox className="h-full p-6 sm:p-8" padding={4} seed={index + 2} dashed={!available}>
-      {concept.doodle && (
-        <svg
-          viewBox={concept.doodle.viewBox}
-          className="mb-6 h-20 w-auto"
-          fill="none"
-          aria-hidden="true"
-        >
-          <motion.path
-            d={concept.doodle.d}
-            stroke="var(--ink)"
-            strokeWidth={2.5}
-            strokeLinecap="round"
-            initial={{ pathLength: 0 }}
-            whileInView={{ pathLength: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.4, delay: 0.3 + index * 0.1, ease: "easeInOut" }}
-          />
-        </svg>
-      )}
-      <p className="mb-3 text-sm text-muted">
-        {concept.category} · {concept.estimatedMinutes} min · {concept.difficulty}
-        {!available && " · coming soon"}
-      </p>
-      <h3 className="mb-3 text-2xl leading-snug font-medium">{concept.title}</h3>
-      <p className="text-muted">{concept.hook ?? concept.description}</p>
-    </SketchBox>
-  );
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.7, delay: index * 0.1, ease: "easeOut" }}
-      whileHover={available ? { rotate: index % 2 === 0 ? -0.6 : 0.6, y: -4 } : {}}
+      whileHover={available ? { rotate: index % 2 === 0 ? -0.5 : 0.5, y: -4 } : {}}
       className={`h-full ${available ? "" : "opacity-60"}`}
     >
-      {available ? (
-        <Link href={`/concepts/${concept.slug}`} className="block h-full">
-          {body}
-        </Link>
-      ) : (
+      <SketchBox className="h-full" padding={4} seed={index + 2} dashed={!available}>
         <Link
           href={`/concepts/${concept.slug}`}
-          className="block h-full"
-          aria-label={`${concept.title} (coming soon)`}
+          className="block p-6 sm:p-8"
+          aria-label={available ? concept.title : `${concept.title} (coming soon)`}
         >
-          {body}
+          {concept.illustration && (
+            <IllustrationView
+              illustration={concept.illustration}
+              className="mb-6 w-full"
+              delay={0.2 + index * 0.1}
+            />
+          )}
+          <p className="mb-3 text-sm text-muted">
+            {concept.estimatedMinutes} min · {concept.difficulty}
+            {!available && " · coming soon"}
+          </p>
+          <h3 className="mb-3 text-2xl leading-snug font-medium">{concept.title}</h3>
+          <p className="text-muted">{concept.hook ?? concept.description}</p>
         </Link>
-      )}
+        {tags.length > 0 && (
+          <ul className="flex flex-wrap gap-2 px-6 pb-6 sm:px-8 sm:pb-8" aria-label="Tags">
+            {tags.map((t) => (
+              <li key={t.id}>
+                <Link href={tagHref([t.id])} className={tagChipClass()}>
+                  {t.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </SketchBox>
     </motion.div>
   );
 }

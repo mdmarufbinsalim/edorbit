@@ -15,6 +15,7 @@ export const orbitalMotion = defineConcept({
   calculators,
   formula,
   simulation,
+  playground: { title: "Launch something" },
   missions,
   references,
   widgets: {

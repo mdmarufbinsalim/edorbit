@@ -1,6 +1,6 @@
-import type { ScientificReference } from "@edorbit/core";
+import type { Source } from "@edorbit/core";
 
-export const references: readonly ScientificReference[] = [
+export const references: readonly Source[] = [
   {
     title: "Orbital Mechanics for Engineering Students",
     authors: "H. D. Curtis",

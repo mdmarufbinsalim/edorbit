@@ -12,3 +12,5 @@ export * from "./helpers/webgl";
 export * from "./helpers/useSimulationLoop";
 export * from "./objects/SketchGlobe";
 export * from "./helpers/useThemeColors";
+export * from "./objects/InkSolid";
+export * from "./objects/GroundLines";

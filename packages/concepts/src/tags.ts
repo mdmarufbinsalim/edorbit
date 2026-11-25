@@ -23,11 +23,14 @@ export const tagVocabulary: readonly TagDefinition[] = [
   { id: "inventions", label: "Inventions", kind: "topic" },
   { id: "patterns", label: "Patterns", kind: "topic" },
   { id: "everyday-life", label: "Everyday life", kind: "topic" },
+  { id: "ideas-and-media", label: "Ideas and media", kind: "topic" },
 
   { id: "experimenting", label: "Experimenting", kind: "skill" },
   { id: "predicting", label: "Predicting", kind: "skill" },
   { id: "reading-graphs", label: "Reading graphs", kind: "skill" },
   { id: "using-formulas", label: "Using formulas", kind: "skill" },
+  { id: "reading-maps", label: "Reading maps", kind: "skill" },
+  { id: "using-sources", label: "Using sources", kind: "skill" },
 ];
 
 export const tagById = new Map(tagVocabulary.map((t) => [t.id, t]));

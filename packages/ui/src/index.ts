@@ -11,3 +11,7 @@ export * from "./learn/MissionList";
 export * from "./simulation/controller";
 export * from "./sketch";
 export * from "./learn/TagChip";
+export * from "./learn/progress";
+export * from "./learn/Timeline";
+export * from "./learn/OrderingChallenge";
+export * from "./learn/SketchMap";

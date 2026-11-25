@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import type { MissionDefinition } from "@edorbit/core";
+import type { ActivityProgress, MissionDefinition } from "@edorbit/core";
 import { RichText } from "../components/RichText";
 import { SketchCheck } from "../sketch/SketchCheck";
 
@@ -78,15 +78,22 @@ function Mission<Params>({ mission, done }: { mission: MissionDefinition<Params>
   );
 }
 
-/** Missions tick themselves off as soon as the current parameters satisfy their check. */
+const NO_PROGRESS: ActivityProgress = {};
+
+/**
+ * Missions tick themselves off as soon as the current parameters, or what the
+ * learner has done in the widgets, satisfy their check.
+ */
 export function MissionList<Params>({
   missions,
   params,
+  progress = NO_PROGRESS,
 }: {
   missions: readonly MissionDefinition<Params>[];
   params: Params;
+  progress?: ActivityProgress;
 }) {
-  const done = missions.map((m) => m.check(params));
+  const done = missions.map((m) => m.check(params, progress));
   const count = done.filter(Boolean).length;
   return (
     <div className="space-y-6">

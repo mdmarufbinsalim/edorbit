@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   transpilePackages: [
     "@edorbit/core",
     "@edorbit/physics",
+    "@edorbit/history",
     "@edorbit/rendering",
     "@edorbit/ui",
     "@edorbit/concepts",

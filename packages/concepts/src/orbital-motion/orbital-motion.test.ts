@@ -15,7 +15,10 @@ import { simulation } from "./simulation";
 import { simulateShot } from "./widgets/cannon-physics";
 import { yearsAt } from "./widgets/KeplerYears";
 
-const mission = (id: string) => missions.find((m) => m.id === id)!;
+const mission = (id: string) => {
+  const m = missions.find((x) => x.id === id)!;
+  return { check: (p: typeof base) => m.check(p, {}) };
+};
 const base = simulation.defaultParameters;
 
 describe("missions are achievable with their hints", () => {

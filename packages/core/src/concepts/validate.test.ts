@@ -54,3 +54,48 @@ describe("validateConcept", () => {
     expect(errors).toHaveLength(6);
   });
 });
+
+describe("validateConcept without a simulation", () => {
+  const story = {
+    story: [{ id: "a", title: "A", body: [], widget: "map" }],
+    limitations: [],
+  };
+  it("accepts a story-and-widgets concept", () => {
+    expect(
+      validateConcept({
+        lesson: story,
+        equations: [],
+        missions: [],
+        widgetIds: ["map", "page"],
+        extraWidgetIds: ["page"],
+        sourceIds: ["a", "b"],
+        debates: [
+          {
+            question: "Q?",
+            perspectives: [
+              { who: "A", view: "yes", sourceId: "a" },
+              { who: "B", view: "no", sourceId: "b" },
+            ],
+          },
+        ],
+      }),
+    ).toEqual([]);
+  });
+  it("needs two sides to a debate, known sources and known widgets", () => {
+    const errors = validateConcept({
+      lesson: story,
+      equations: [],
+      missions: [],
+      widgetIds: ["map"],
+      extraWidgetIds: ["missing"],
+      sourceIds: ["a", "a"],
+      debates: [{ question: "Q?", perspectives: [{ who: "A", view: "yes", sourceId: "zzz" }] }],
+    });
+    expect(errors).toEqual([
+      'Duplicate source id "a"',
+      'Unknown widget "missing"',
+      'Debate "Q?" needs at least two perspectives',
+      'Debate cites unknown source "zzz"',
+    ]);
+  });
+});

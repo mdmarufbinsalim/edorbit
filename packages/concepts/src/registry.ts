@@ -1,6 +1,7 @@
 import { ConceptRegistry } from "@edorbit/core";
 import type { ConceptEntry } from "./types";
 import { orbitalMotion } from "./orbital-motion";
+import { printingPress } from "./printing-press";
 
 /**
  * The single place a concept is registered. Adding a concept means adding a
@@ -9,4 +10,5 @@ import { orbitalMotion } from "./orbital-motion";
  */
 export const conceptRegistry = new ConceptRegistry<ConceptEntry>([
   { metadata: orbitalMotion.metadata, module: orbitalMotion },
+  { metadata: printingPress.metadata, module: printingPress },
 ]);

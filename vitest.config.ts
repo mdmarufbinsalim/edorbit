@@ -6,7 +6,10 @@ export default defineConfig({
       {
         test: {
           name: "models",
-          include: ["packages/{core,physics}/**/*.test.ts", "packages/concepts/**/*.test.ts"],
+          include: [
+            "packages/{core,physics,history}/**/*.test.ts",
+            "packages/concepts/**/*.test.ts",
+          ],
           environment: "node",
         },
       },

@@ -41,27 +41,27 @@ The contract still assumes every concept is a numerical simulation. Generalise i
 
 ### Contract
 
-- [ ] Make `simulation` and `Scene` optional. A concept can be story + widgets + missions only
+- [x] Make `simulation` and `Scene` optional. A concept can be story + widgets + missions only
 - [x] Missions explain the reasoning behind each goal (Explain button), separate from hints
-- [ ] Missions that check widget state or answers, not only simulation parameters
+- [x] Missions that check widget state or answers, not only simulation parameters
 - [ ] Rename science-specific types to neutral ones, keeping deprecated aliases: `ScientificModel` → `Model`, `ScientificReference` → `Source`
-- [ ] `Source` supports primary vs secondary sources, archives, dates, page/section, and licence
+- [x] `Source` supports primary vs secondary sources, archives, dates, page/section, and licence
 - [ ] Subject taxonomy: `subject` (e.g. Physics, History, Music) + `topics[]`, replacing free-text `category`
-- [ ] Optional `era`/`date` metadata for historical concepts
-- [ ] Validation covers the new fields; registry test runs it for every concept
+- [x] Optional `era`/`date` metadata for historical concepts
+- [x] Validation covers the new fields; registry test runs it for every concept
 
 ### Domain packages
 
-- [ ] Convention: one pure package per domain (`packages/physics`, then e.g. `packages/maths`, `packages/history`), with the same no-React/no-Three rule
-- [ ] Generalise the ESLint boundary from `core`/`physics` to every domain package via a glob
-- [ ] Shared "content data" pattern for non-numeric domains (dated events, places, people, quotations with citations)
+- [x] Convention: one pure package per domain (`packages/physics`, then e.g. `packages/maths`, `packages/history`), with the same no-React/no-Three rule
+- [x] Generalise the ESLint boundary from `core`/`physics` to every domain package via a glob
+- [x] Shared "content data" pattern for non-numeric domains (dated events, places, people, quotations with citations)
 
 ### Widget kit (reusable, non-simulation)
 
-- [ ] Timeline (scrub through dated events)
-- [ ] Map with sketch markers and routes
+- [x] Timeline (scrub through dated events)
+- [x] Map with sketch markers and routes
 - [ ] Before/after compare slider
-- [ ] Ordering / sorting challenge ("put these in order")
+- [x] Ordering / sorting challenge ("put these in order")
 - [ ] Step-through diagram (click next to reveal each stage)
 - [ ] Prediction card (guess, then reveal)
 - [ ] Audio-friendly widget hooks (for music and language concepts)
@@ -91,7 +91,7 @@ Candidates, not commitments. Each needs a proposal issue first.
 - [ ] Computer science: how sorting algorithms race; binary counting
 - [ ] Chemistry: why ice floats
 - [ ] Biology: natural selection with a population you breed
-- [ ] History: how the printing press spread ideas across Europe
+- [x] History: how the printing press spread ideas across Europe ([proposal](docs/concepts/printing-press.md)). Planned as the next concept
 - [ ] Economics: supply and demand at a lemonade stand
 - [ ] Music: why some notes sound good together (frequency ratios)
 - [ ] Geography / Earth science: why we have seasons

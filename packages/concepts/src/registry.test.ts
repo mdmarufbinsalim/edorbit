@@ -33,13 +33,32 @@ describe("concept registry", () => {
           calculators: m.calculators ?? [],
           ...(m.formula ? { formula: m.formula } : {}),
           missions: m.missions,
-          defaultParameters: m.simulation.defaultParameters,
-          parameterDefinitions: m.simulation.parameterDefinitions,
-          visualLayers: m.simulation.visualLayers,
-          readoutIds: m.simulation.readouts.map((r) => r.id),
+          ...(m.simulation
+            ? {
+                defaultParameters: m.simulation.defaultParameters,
+                parameterDefinitions: m.simulation.parameterDefinitions,
+                visualLayers: m.simulation.visualLayers,
+                readoutIds: m.simulation.readouts.map((r) => r.id),
+              }
+            : {}),
           widgetIds: Object.keys(m.widgets ?? {}),
+          extraWidgetIds: [m.featured?.widget, m.playground?.widget].filter(
+            (w): w is string => !!w,
+          ),
+          ...(m.debates ? { debates: m.debates } : {}),
+          sourceIds: m.references.flatMap((r) => (r.id ? [r.id] : [])),
         }),
       ).toEqual([]);
+    },
+  );
+
+  it.each(conceptRegistry.list().filter((e) => e.module))(
+    "$metadata.slug has a playground",
+    ({ module }) => {
+      const m = module!;
+      // simulation and Scene come as a pair; otherwise the playground is a widget.
+      expect(!!m.simulation).toBe(!!m.Scene);
+      expect(!!m.simulation || !!m.playground?.widget).toBe(true);
     },
   );
 });

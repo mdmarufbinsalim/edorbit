@@ -3,9 +3,12 @@ import reactHooks from "eslint-plugin-react-hooks";
 import nextPlugin from "@next/eslint-plugin-next";
 
 /**
- * The most important boundary in EdOrbit: scientific code (core, physics)
- * must never depend on React, Three.js, or any UI layer.
+ * The most important boundary in EdOrbit: core and every domain package
+ * (physics, history, and future ones such as maths) must never depend on
+ * React, Three.js, or any UI layer. Add new domain packages to this list.
  */
+const PURE_PACKAGES = ["core", "physics", "history"];
+
 const UI_IMPORTS = [
   {
     group: ["react", "react/*", "react-dom", "react-dom/*"],
@@ -46,7 +49,7 @@ export default tseslint.config(
     settings: { next: { rootDir: "apps/web" } },
   },
   {
-    files: ["packages/core/**/*.ts", "packages/physics/**/*.ts"],
+    files: PURE_PACKAGES.map((p) => `packages/${p}/**/*.ts`),
     rules: { "no-restricted-imports": ["error", { patterns: UI_IMPORTS }] },
   },
 );

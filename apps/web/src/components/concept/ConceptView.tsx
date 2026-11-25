@@ -14,6 +14,8 @@ import {
   LayerToggles,
   MissionList,
   ParameterSlider,
+  ProgressProvider,
+  useProgress,
   QuizCard,
   ReadoutPanel,
   RichText,
@@ -106,18 +108,26 @@ function Chapter({
   );
 }
 
-function ConceptPage({ concept }: { concept: AnyConceptModule }) {
-  const {
-    metadata,
-    lesson,
-    equations,
-    calculators = [],
-    formula,
-    simulation,
-    missions,
-    references,
-    Scene,
-  } = concept;
+function Missions({ concept, params }: { concept: AnyConceptModule; params: object }) {
+  const progress = useProgress();
+  if (concept.missions.length === 0) return null;
+  return (
+    <Reveal className="mt-16">
+      <h3 className="mb-6 text-2xl font-medium">Missions</h3>
+      <MissionList missions={concept.missions} params={params} progress={progress} />
+    </Reveal>
+  );
+}
+
+function SimulationPlayground({
+  concept,
+  simulation,
+  Scene,
+}: {
+  concept: AnyConceptModule;
+  simulation: NonNullable<AnyConceptModule["simulation"]>;
+  Scene: NonNullable<AnyConceptModule["Scene"]>;
+}) {
   const [{ engine, store }] = useState(() => createSimulationController(simulation));
   const params = useStore(store, (s) => s.params);
   const layers = useStore(store, (s) => s.layers);
@@ -129,8 +139,6 @@ function ConceptPage({ concept }: { concept: AnyConceptModule }) {
   const nerdReadouts = simulation.readouts.filter((r) => !r.basic);
   const basicParams = simulation.parameterDefinitions.filter((p) => !p.advanced);
   const advancedParams = simulation.parameterDefinitions.filter((p) => p.advanced);
-  const featuredEq = formula && equations.find((e) => e.id === formula.equationId);
-  const featuredCalc = formula && calculators.find((c) => c.id === formula.calculatorId);
 
   const slider = (p: (typeof simulation.parameterDefinitions)[number]) => (
     <ParameterSlider
@@ -148,6 +156,113 @@ function ConceptPage({ concept }: { concept: AnyConceptModule }) {
   );
 
   return (
+    <>
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px]">
+        <SketchBox className="h-[60vh] min-h-[380px]" innerClassName="h-full" padding={4} seed={41}>
+          <div className="absolute inset-[6px] overflow-hidden">
+            <Suspense fallback={<p className="p-6 text-muted">Loading 3D…</p>}>
+              <Scene engine={engine} params={params} layers={layers} />
+            </Suspense>
+          </div>
+          <p className="pointer-events-none absolute bottom-3 left-4 text-xs text-muted">
+            Drag to spin · scroll to zoom
+          </p>
+        </SketchBox>
+        <div className="space-y-7">
+          <SimulationToolbar
+            playing={playing}
+            timeScale={timeScale}
+            timeScales={simulation.timeScales}
+            onPlay={actions.play}
+            onPause={actions.pause}
+            onReset={actions.reset}
+            onStep={() => actions.step()}
+            onTimeScale={actions.setTimeScale}
+          />
+          <div className="space-y-5">{basicParams.map(slider)}</div>
+          <ReadoutPanel engine={engine} readouts={basicReadouts} />
+          <LayerToggles
+            layers={simulation.visualLayers}
+            values={layers}
+            onChange={actions.setLayer}
+          />
+          <Expandable title="Nerd stats & extra controls">
+            <div className="space-y-5">
+              {advancedParams.map(slider)}
+              {simulation.derivedControls
+                ?.filter((c) => c.advanced)
+                .map((c) => (
+                  <ParameterSlider
+                    key={c.id}
+                    label={c.label}
+                    unit={c.unit}
+                    value={c.get(params)}
+                    min={c.min}
+                    max={c.max}
+                    step={c.step}
+                    {...(c.description ? { description: c.description } : {})}
+                    onChange={(v) => actions.setParams(c.set(v, params))}
+                  />
+                ))}
+              <ReadoutPanel engine={engine} readouts={nerdReadouts} size="sm" />
+              <button
+                type="button"
+                onClick={actions.resetParams}
+                className="text-sm underline decoration-2 underline-offset-4"
+              >
+                Back to the start
+              </button>
+            </div>
+          </Expandable>
+        </div>
+      </div>
+      <Missions concept={concept} params={params} />
+    </>
+  );
+}
+
+const NO_PARAMS = {};
+const SOURCE_KIND: Record<string, string> = {
+  primary: "Primary source",
+  secondary: "Secondary source",
+  dataset: "Dataset",
+};
+
+function eraLabel({ from, to, approximate }: { from: number; to: number; approximate?: boolean }) {
+  const y = (n: number) => (n < 1 ? `${1 - n} BCE` : String(n));
+  return `${approximate ? "c. " : ""}${y(from)}–${y(to)}`;
+}
+
+function ConceptPage({ concept }: { concept: AnyConceptModule }) {
+  return (
+    <ProgressProvider>
+      <ConceptPageBody concept={concept} />
+    </ProgressProvider>
+  );
+}
+
+function ConceptPageBody({ concept }: { concept: AnyConceptModule }) {
+  const {
+    metadata,
+    lesson,
+    equations,
+    calculators = [],
+    formula,
+    featured,
+    simulation,
+    Scene,
+    playground,
+    references,
+    debates = [],
+    widgets = {},
+  } = concept;
+  const featuredEq = formula && equations.find((e) => e.id === formula.equationId);
+  const featuredCalc = formula && calculators.find((c) => c.id === formula.calculatorId);
+  const FeaturedWidget = featured ? widgets[featured.widget] : undefined;
+  const PlaygroundWidget = playground?.widget ? widgets[playground.widget] : undefined;
+  const sourceById = new Map(references.flatMap((r) => (r.id ? [[r.id, r] as const] : [])));
+
+  return (
     <article className="space-y-28 pb-28">
       <header className="pt-16 sm:pt-24">
         <motion.p
@@ -156,6 +271,7 @@ function ConceptPage({ concept }: { concept: AnyConceptModule }) {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="mb-4 text-sm tracking-wide text-muted"
         >
+          {metadata.era && <>{eraLabel(metadata.era)} · </>}
           {metadata.estimatedMinutes} min · {metadata.difficulty}
         </motion.p>
         <motion.h1
@@ -229,82 +345,36 @@ function ConceptPage({ concept }: { concept: AnyConceptModule }) {
         </section>
       )}
 
+      {featured && FeaturedWidget && (
+        <section aria-labelledby="featured">
+          <Reveal>
+            <SectionTitle kicker={featured.kicker} id="featured">
+              {featured.title}
+            </SectionTitle>
+            <Suspense fallback={<p className="text-muted">Loading…</p>}>
+              <FeaturedWidget />
+            </Suspense>
+          </Reveal>
+        </section>
+      )}
+
       <section aria-labelledby="playground">
         <Reveal>
           <SectionTitle kicker="Your turn" id="playground">
-            Launch something
+            {playground?.title ?? "Try it yourself"}
           </SectionTitle>
         </Reveal>
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px]">
-          <SketchBox
-            className="h-[60vh] min-h-[380px]"
-            innerClassName="h-full"
-            padding={4}
-            seed={41}
-          >
-            <div className="absolute inset-[6px] overflow-hidden">
-              <Suspense fallback={<p className="p-6 text-muted">Loading 3D…</p>}>
-                <Scene engine={engine} params={params} layers={layers} />
+        {simulation && Scene ? (
+          <SimulationPlayground concept={concept} simulation={simulation} Scene={Scene} />
+        ) : (
+          <>
+            {PlaygroundWidget && (
+              <Suspense fallback={<p className="text-muted">Loading…</p>}>
+                <PlaygroundWidget />
               </Suspense>
-            </div>
-            <p className="pointer-events-none absolute bottom-3 left-4 text-xs text-muted">
-              Drag to spin · scroll to zoom
-            </p>
-          </SketchBox>
-          <div className="space-y-7">
-            <SimulationToolbar
-              playing={playing}
-              timeScale={timeScale}
-              timeScales={simulation.timeScales}
-              onPlay={actions.play}
-              onPause={actions.pause}
-              onReset={actions.reset}
-              onStep={() => actions.step()}
-              onTimeScale={actions.setTimeScale}
-            />
-            <div className="space-y-5">{basicParams.map(slider)}</div>
-            <ReadoutPanel engine={engine} readouts={basicReadouts} />
-            <LayerToggles
-              layers={simulation.visualLayers}
-              values={layers}
-              onChange={actions.setLayer}
-            />
-            <Expandable title="Nerd stats & extra controls">
-              <div className="space-y-5">
-                {advancedParams.map(slider)}
-                {simulation.derivedControls
-                  ?.filter((c) => c.advanced)
-                  .map((c) => (
-                    <ParameterSlider
-                      key={c.id}
-                      label={c.label}
-                      unit={c.unit}
-                      value={c.get(params)}
-                      min={c.min}
-                      max={c.max}
-                      step={c.step}
-                      {...(c.description ? { description: c.description } : {})}
-                      onChange={(v) => actions.setParams(c.set(v, params))}
-                    />
-                  ))}
-                <ReadoutPanel engine={engine} readouts={nerdReadouts} size="sm" />
-                <button
-                  type="button"
-                  onClick={actions.resetParams}
-                  className="text-sm underline decoration-2 underline-offset-4"
-                >
-                  Back to the start
-                </button>
-              </div>
-            </Expandable>
-          </div>
-        </div>
-
-        {missions.length > 0 && (
-          <Reveal className="mt-16">
-            <h3 className="mb-6 text-2xl font-medium">Missions</h3>
-            <MissionList missions={missions} params={params} />
-          </Reveal>
+            )}
+            <Missions concept={concept} params={NO_PARAMS} />
+          </>
         )}
       </section>
 
@@ -313,14 +383,45 @@ function ConceptPage({ concept }: { concept: AnyConceptModule }) {
         className="max-w-3xl border-t border-neutral-200 pt-10 dark:border-white/10"
       >
         <p className="mb-4 text-sm text-muted">For the curious</p>
-        <Expandable title="All the maths">
-          <div className="space-y-6">
-            {equations.map((eq) => (
-              <EquationCard key={eq.id} equation={eq} />
-            ))}
-          </div>
-        </Expandable>
-        <Expandable title="What this simulation leaves out">
+        {equations.length > 0 && (
+          <Expandable title="All the maths">
+            <div className="space-y-6">
+              {equations.map((eq) => (
+                <EquationCard key={eq.id} equation={eq} />
+              ))}
+            </div>
+          </Expandable>
+        )}
+        {debates.map((d) => (
+          <Expandable key={d.question} title="Experts disagree">
+            <div className="space-y-4">
+              <p className="text-lg font-medium">{d.question}</p>
+              {d.perspectives.map((p) => {
+                const src = p.sourceId ? sourceById.get(p.sourceId) : undefined;
+                return (
+                  <div key={p.who} className="border-l-2 border-[var(--ink)] pl-4">
+                    <p className="font-medium">{p.who}</p>
+                    <p className="text-muted">
+                      <RichText text={p.view} />
+                    </p>
+                    {src && (
+                      <p className="mt-1 text-xs text-muted">
+                        <em>{src.title}</em>
+                        {src.year && <>, {src.year}</>}
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+              {d.common && (
+                <p>
+                  <RichText text={d.common} />
+                </p>
+              )}
+            </div>
+          </Expandable>
+        ))}
+        <Expandable title="What this leaves out">
           <ul className="list-disc space-y-2 pl-5 text-muted">
             {lesson.limitations.map((l) => (
               <li key={l}>
@@ -330,9 +431,14 @@ function ConceptPage({ concept }: { concept: AnyConceptModule }) {
           </ul>
         </Expandable>
         <Expandable title="Where this comes from">
-          <ol className="list-decimal space-y-1 pl-5 text-sm text-muted">
+          <ol className="list-decimal space-y-2 pl-5 text-sm text-muted">
             {references.map((r) => (
-              <li key={r.title}>
+              <li key={r.id ?? r.title}>
+                {r.kind && (
+                  <span className="mr-2 rounded-full border border-[var(--faint)] px-2 text-xs">
+                    {SOURCE_KIND[r.kind]}
+                  </span>
+                )}
                 {r.authors && <>{r.authors}, </>}
                 {r.url ? (
                   <a
@@ -347,7 +453,9 @@ function ConceptPage({ concept }: { concept: AnyConceptModule }) {
                   <em>{r.title}</em>
                 )}
                 . {r.source}
-                {r.year && <>, {r.year}</>}.
+                {r.year && <>, {r.year}</>}
+                {r.section && <>, {r.section}</>}.{r.archive && <> {r.archive}.</>}
+                {r.licence && <> Licence: {r.licence}.</>}
               </li>
             ))}
           </ol>

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@edorbit/core": "workspace:*",
+    "@edorbit/history": "workspace:*",
     "@edorbit/physics": "workspace:*",
     "@edorbit/rendering": "workspace:*",
     "@edorbit/ui": "workspace:*",

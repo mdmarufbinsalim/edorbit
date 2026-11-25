@@ -22,6 +22,16 @@ export interface ConceptMetadata {
   hook?: string;
   /** Hand-drawn card illustration, drawn in stroke by stroke. */
   illustration?: Illustration;
+  /** The period a historical concept covers, e.g. 1450 to 1520. */
+  era?: Era;
+}
+
+/** Years are CE; negative numbers are BCE. */
+export interface Era {
+  from: number;
+  to: number;
+  /** Shown with "c." when the boundaries are approximate. */
+  approximate?: boolean;
 }
 
 /** One pen stroke of an illustration. Paths are drawn in order, `delay` adds to the stagger. */
@@ -126,7 +136,16 @@ export interface VisualLayerDefinition {
   defaultVisible: boolean;
 }
 
-/** A goal the learner reaches by changing parameters. `check` must use the real model. */
+/** A value a widget reports about what the learner did, e.g. a tapped town or a solved puzzle. */
+export type ProgressValue = string | number | boolean | readonly string[];
+
+/** Everything the learner's widgets have reported so far, keyed by the concept's own ids. */
+export type ActivityProgress = Readonly<Record<string, ProgressValue>>;
+
+/**
+ * A goal the learner reaches by changing parameters or by doing something in a
+ * widget. `check` must use the real model or data, never a hard-coded answer.
+ */
 export interface MissionDefinition<Params = Record<string, number>> {
   id: string;
   title: string;
@@ -134,7 +153,7 @@ export interface MissionDefinition<Params = Record<string, number>> {
   hint: string;
   /** The physics (or reasoning) behind the goal, shown by the Explain button at any time. */
   explain: string;
-  check: (params: Params) => boolean;
+  check: (params: Params, progress: ActivityProgress) => boolean;
   /** Celebration + the physics behind it, shown on success. */
   success: string;
 }
@@ -167,10 +186,47 @@ export interface CalculatorDefinition {
   outputs: readonly CalculatorOutput[];
 }
 
-export interface ScientificReference {
+/**
+ * primary: made at the time (a document, object, letter).
+ * secondary: later scholarship about the past or the science.
+ * dataset: a catalogue or database the concept's numbers come from.
+ */
+export type SourceKind = "primary" | "secondary" | "dataset";
+
+/** A cited source. History concepts should set `kind` so readers can tell primary from secondary. */
+export interface Source {
+  /** Stable id so data and claims can cite it, e.g. "istc". */
+  id?: string;
   title: string;
   authors?: string;
+  /** Publisher, journal, institution or archive. */
   source: string;
   year?: number;
   url?: string;
+  kind?: SourceKind;
+  /** Page, chapter or section, e.g. "ch. 2" or "pp. 409–445". */
+  section?: string;
+  /** Where an original object or document is held. */
+  archive?: string;
+  /** Licence, for data or images the concept redistributes. */
+  licence?: string;
+}
+
+/** @deprecated Use `Source`. */
+export type ScientificReference = Source;
+
+/** One side of a real scholarly debate. */
+export interface Perspective {
+  who: string;
+  view: string;
+  /** Id of the `Source` this view comes from. */
+  sourceId?: string;
+}
+
+/** A question experts disagree on. Content standards require at least two views, presented fairly. */
+export interface Debate {
+  question: string;
+  perspectives: readonly Perspective[];
+  /** Where the views overlap, or what most experts do agree on. */
+  common?: string;
 }

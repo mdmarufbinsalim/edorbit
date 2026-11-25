@@ -44,7 +44,7 @@ Legend: `[x]` done · `[ ]` to do
 - [x] `SimulationEngine`: play / pause / reset / step-forward / snapshot
 - [x] Parameter change → model re-initialisation contract
 - [x] Zustand store factory for per-concept simulation + UI state
-- [ ] `useSimulationLoop` hook driving the engine from R3F `useFrame` without React rerenders
+- [x] `useSimulationLoop` hook driving the engine from R3F `useFrame` without React rerenders
 - [x] Web Worker path for expensive models
 
 ### Numerical integration (`@orbital/physics/integration`)
@@ -81,12 +81,12 @@ Legend: `[x]` done · `[ ]` to do
 
 - [x] `SceneCanvas` (camera, lights, orbit controls)
 - [x] Linear SI → scene scale helper
-- [ ] Celestial body component (textured sphere, configurable)
-- [ ] Trajectory / trail line
-- [ ] Vector arrow (force, velocity, acceleration)
-- [ ] Labels and annotations
-- [ ] Starfield background
-- [ ] WebGL-unavailable fallback
+- [x] Celestial body component (shaded sphere, configurable; textures deferred to design pass)
+- [x] Trajectory / trail line
+- [x] Vector arrow (force, velocity, acceleration)
+- [x] Labels and annotations
+- [x] Starfield background
+- [x] WebGL-unavailable fallback
 - [ ] Lazy loading of scenes and textures
 - [ ] Texture attribution file (`docs/assets.md`)
 

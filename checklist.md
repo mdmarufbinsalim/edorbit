@@ -36,7 +36,7 @@ Legend: `[x]` done · `[ ]` to do
 
 - [x] SI type aliases, physical constants (G, AU, Earth, Moon, Sun)
 - [x] Display conversions (km, Earth radii, hours, days)
-- [ ] Unit-aware formatting helpers for readouts (significant figures, scientific notation)
+- [x] Unit-aware formatting helpers for readouts (significant figures, scientific notation)
 
 ### Simulation lifecycle (`@orbital/core/simulation`)
 
@@ -98,8 +98,8 @@ Legend: `[x]` done · `[ ]` to do
 
 - [ ] Lesson content and learning objectives
 - [ ] Equations: $F = GMm/r^2$, vis-viva, Kepler's third law
-- [ ] Physics: two-body propagation, state ↔ orbital elements (a, e, periapsis, apoapsis, period)
-- [ ] Tests: circular orbit period, vis-viva at periapsis/apoapsis, energy and angular momentum conservation
+- [x] Physics: two-body propagation, state ↔ orbital elements (a, e, periapsis, apoapsis, period)
+- [x] Tests: circular orbit period, vis-viva at periapsis/apoapsis, energy and angular momentum conservation
 - [ ] Scene: central body, orbiter, trajectory, velocity/acceleration vectors, apsis markers
 - [ ] Controls: initial position, velocity, eccentricity
 - [ ] Readouts: period, speed, r, energy, h

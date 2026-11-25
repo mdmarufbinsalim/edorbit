@@ -58,24 +58,24 @@ Legend: `[x]` done · `[ ]` to do
 ### Equation rendering (`@orbital/ui/equations`)
 
 - [x] `Equation` component (KaTeX)
-- [ ] `EquationCard`: name, description, variable table, units, assumptions, validity
-- [ ] Interactive calculator: inputs bound to variables, live result
-- [ ] Worked-example block
+- [x] `EquationCard`: name, description, variable table, units, assumptions, validity
+- [x] Interactive calculator: inputs bound to variables, live result
+- [x] Worked-example block
 
 ### Learning page (`@orbital/ui/lesson` + `apps/web`)
 
 - [ ] Section layout: introduction → explanation → mathematics → simulation → experiments → references
 - [ ] Desktop: large simulation area + contextual control panel; mobile: stacked
-- [ ] In-page section navigation
-- [ ] "Idealised model" limitation callout component
+- [x] In-page section navigation
+- [x] "Idealised model" limitation callout component
 
 ### Shared controls (`@orbital/ui/controls`)
 
-- [ ] Parameter slider (keyboard accessible, unit display)
-- [ ] Simulation toolbar (play/pause, reset, step, speed)
-- [ ] Visual layer toggles
-- [ ] Data readout panel
-- [ ] Experiment panel (prediction → run → compare)
+- [x] Parameter slider (keyboard accessible, unit display)
+- [x] Simulation toolbar (play/pause, reset, step, speed)
+- [x] Visual layer toggles
+- [x] Data readout panel
+- [x] Experiment panel (prediction → run → compare)
 
 ### Rendering (`@orbital/rendering`)
 

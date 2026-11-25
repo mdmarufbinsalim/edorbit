@@ -9,7 +9,7 @@ export function IllustrationView({
   illustration,
   className = "",
   delay = 0,
-  stagger = 0.08,
+  stagger = 0.15,
 }: {
   illustration: Illustration;
   className?: string;
@@ -32,14 +32,15 @@ export function IllustrationView({
           strokeWidth={s.width ?? SKETCH_STROKE}
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeDasharray={s.dashed ? "1 7" : undefined}
+          strokeDasharray={s.dashed ? "2 8" : undefined}
           fill={s.fill ? "var(--paper)" : "none"}
-          initial={{ pathLength: 0, opacity: 0 }}
-          whileInView={{ pathLength: 1, opacity: 1 }}
+          // pathLength drawing replaces the dash pattern, so dashed strokes fade in instead.
+          initial={s.dashed ? { opacity: 0 } : { pathLength: 0, opacity: 0 }}
+          whileInView={s.dashed ? { opacity: 1 } : { pathLength: 1, opacity: 1 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{
             pathLength: { duration: 0.9, delay: delay + i * stagger, ease: "easeInOut" },
-            opacity: { duration: 0.2, delay: delay + i * stagger },
+            opacity: { duration: s.dashed ? 0.8 : 0.2, delay: delay + i * stagger },
           }}
         />
       ))}

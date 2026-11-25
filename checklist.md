@@ -25,6 +25,8 @@ Legend: `[x]` done · `[ ]` to do
 
 ## Phase 1 — Platform foundation
 
+> Design/UX is intentionally minimal in Phase 1–2; a dedicated design pass will follow. Components keep styling in thin Tailwind class layers so they can be restyled without touching logic.
+
 ### Contracts (`@orbital/core`)
 
 - [x] `ConceptMetadata`, `EquationDefinition`, `LessonDefinition`, `ParameterDefinition`, `ExperimentDefinition`, `ScientificReference`
@@ -53,7 +55,7 @@ Legend: `[x]` done · `[ ]` to do
 - [x] Leapfrog (kick-drift-kick)
 - [x] RK4
 - [x] Energy-drift tests against analytical circular/elliptical orbits
-- [ ] Document stability and timestep limits in `docs/scientific-standards.md`
+- [x] Document stability and timestep limits in `docs/scientific-standards.md`
 
 ### Equation rendering (`@orbital/ui/equations`)
 
@@ -64,8 +66,8 @@ Legend: `[x]` done · `[ ]` to do
 
 ### Learning page (`@orbital/ui/lesson` + `apps/web`)
 
-- [ ] Section layout: introduction → explanation → mathematics → simulation → experiments → references
-- [ ] Desktop: large simulation area + contextual control panel; mobile: stacked
+- [x] Section layout: introduction → explanation → mathematics → simulation → experiments → references
+- [x] Desktop: large simulation area + contextual control panel; mobile: stacked
 - [x] In-page section navigation
 - [x] "Idealised model" limitation callout component
 
@@ -87,26 +89,28 @@ Legend: `[x]` done · `[ ]` to do
 - [x] Labels and annotations
 - [x] Starfield background
 - [x] WebGL-unavailable fallback
-- [ ] Lazy loading of scenes and textures
-- [ ] Texture attribution file (`docs/assets.md`)
+- [x] Lazy loading of scenes and textures
+- [x] Texture attribution file (`docs/assets.md`)
 
-**Deliverable:** application shell with one reusable concept implementation.
+**Deliverable:** application shell with one reusable concept implementation. ✅ (Orbital Motion)
 
 ## Phase 2 — First two complete concepts
 
 ### 4.1 Orbital Motion and Kepler's Laws
 
-- [ ] Lesson content and learning objectives
-- [ ] Equations: $F = GMm/r^2$, vis-viva, Kepler's third law
+- [x] Lesson content and learning objectives
+- [x] Equations: $F = GMm/r^2$, vis-viva, Kepler's third law
 - [x] Physics: two-body propagation, state ↔ orbital elements (a, e, periapsis, apoapsis, period)
 - [x] Tests: circular orbit period, vis-viva at periapsis/apoapsis, energy and angular momentum conservation
-- [ ] Scene: central body, orbiter, trajectory, velocity/acceleration vectors, apsis markers
-- [ ] Controls: initial position, velocity, eccentricity
-- [ ] Readouts: period, speed, r, energy, h
-- [ ] Experiments (≥3), e.g. equal-areas demonstration, doubling a
-- [ ] References
+- [x] Scene: central body, orbiter, trajectory, velocity/acceleration vectors, apsis markers
+- [x] Controls: initial position, velocity, eccentricity
+- [x] Readouts: period, speed, r, energy, h
+- [x] Experiments (≥3), e.g. equal-areas demonstration, doubling a
+- [x] References
 
 ### 4.2 Escape Velocity and Gravitational Binding Energy
+
+> Deferred: Phase 2 was scoped to one concept for this pass.
 
 - [ ] Lesson content
 - [ ] Equations: $v_{esc} = \sqrt{2GM/r}$, $U = -GMm/r$, $\varepsilon = v^2/2 - \mu/r$

@@ -14,3 +14,17 @@ Every concept must:
 Choose an integrator suited to the model and document its stability and timestep limits. Symplectic integrators (Velocity Verlet, leapfrog) are preferred for long-running conservative orbital systems.
 
 _Expanded during Phase 1._
+
+## Integrators available in `@orbital/physics`
+
+| Integrator       | Order | Symplectic | Notes                                                                                                                  |
+| ---------------- | ----- | ---------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `velocityVerlet` | 2     | yes        | Default for orbital propagation. Energy error is bounded and oscillates rather than drifting.                          |
+| `leapfrog` (KDK) | 2     | yes        | Equivalent to Verlet for velocity-independent forces.                                                                  |
+| `rk4`            | 4     | no         | Very accurate per step, but energy drifts secularly over long runs. Use for short horizons or non-conservative forces. |
+
+### Timestep limits
+
+The error per orbit scales with $(\Delta t / T)^2$ for the second-order methods. As a rule of thumb, keep at least ~500 steps per orbital period, and many more near periapsis of highly eccentric orbits, where the local timescale is $\sim\sqrt{r_p^3/\mu}$. Orbital Motion uses $\Delta t = 5$ s. That gives ~1100 steps per orbit at LEO and keeps relative energy drift below $10^{-5}$ per orbit for moderate eccentricities.
+
+The engine runs physics on a fixed timestep independent of frame rate. Raising the time scale runs more fixed steps per frame; it never enlarges the step. Steps per frame are capped (default 1000) to avoid stalls.

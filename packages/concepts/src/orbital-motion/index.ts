@@ -1,14 +1,20 @@
-import type { ConceptMetadata } from "@orbital/core";
+import { lazy } from "react";
+import { defineConcept } from "../types";
+import { metadata } from "./metadata";
+import { lesson } from "./lesson";
+import { equations } from "./equations";
+import { calculators } from "./calculators";
+import { simulation } from "./simulation";
+import { experiments } from "./experiments";
+import { references } from "./references";
 
-export const metadata: ConceptMetadata = {
-  id: "orbital-motion",
-  slug: "orbital-motion",
-  title: "Orbital Motion and Kepler's Laws",
-  question: "Why do planets, moons, and satellites orbit instead of travelling in straight lines?",
-  description:
-    "Newtonian gravity, elliptical orbits, and the conservation laws behind Kepler's three laws.",
-  category: "Orbital mechanics",
-  difficulty: "beginner",
-  estimatedMinutes: 20,
-  tags: ["gravity", "kepler", "vis-viva", "ellipse"],
-};
+export const orbitalMotion = defineConcept({
+  metadata,
+  lesson,
+  equations,
+  calculators,
+  simulation,
+  experiments,
+  references,
+  Scene: lazy(() => import("./scene")),
+});

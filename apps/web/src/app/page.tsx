@@ -10,8 +10,8 @@ export default function HomePage() {
         Understand the mathematics. Explore the phenomenon. Experiment with the physics.
       </p>
       <section aria-label="Concepts" className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {concepts.map(({ metadata }) => (
-          <ConceptCard key={metadata.slug} concept={metadata} />
+        {concepts.map(({ metadata, module }) => (
+          <ConceptCard key={metadata.slug} concept={metadata} available={!!module} />
         ))}
       </section>
     </main>

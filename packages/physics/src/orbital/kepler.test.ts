@@ -14,9 +14,9 @@ describe("Kepler / vis-viva", () => {
     expect(orbitalPeriod(SUN.mu, AU) / 86_400).toBeCloseTo(365.26, 1);
   });
 
-  it("ISS (~420 km) orbits in ~92.7 min at ~7.66 km/s", () => {
+  it("ISS (~420 km) orbits in ~92.97 min at ~7.66 km/s", () => {
     const r = EARTH.equatorialRadius + 420e3;
-    expect(orbitalPeriod(EARTH.mu, r) / 60).toBeCloseTo(92.7, 0);
+    expect(orbitalPeriod(EARTH.mu, r) / 60).toBeCloseTo(92.97, 1);
     expect(circularSpeed(EARTH.mu, r) / 1000).toBeCloseTo(7.66, 2);
   });
 

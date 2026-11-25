@@ -1,7 +1,13 @@
 import Link from "next/link";
 import type { ConceptMetadata } from "@orbital/core";
 
-export function ConceptCard({ concept }: { concept: ConceptMetadata }) {
+export function ConceptCard({
+  concept,
+  available,
+}: {
+  concept: ConceptMetadata;
+  available: boolean;
+}) {
   return (
     <Link
       href={`/concepts/${concept.slug}`}
@@ -9,6 +15,7 @@ export function ConceptCard({ concept }: { concept: ConceptMetadata }) {
     >
       <p className="font-mono text-xs uppercase tracking-widest text-accent-muted">
         {concept.category} · {concept.difficulty} · {concept.estimatedMinutes} min
+        {!available && " · planned"}
       </p>
       <h2 className="mt-3 text-lg font-semibold text-slate-50 group-hover:text-accent">
         {concept.title}

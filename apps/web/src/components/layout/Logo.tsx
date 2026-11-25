@@ -1,41 +1,49 @@
+import { useId } from "react";
+
+/** Ring in the planet's tilted frame: centre, rotation and semi-axes shared by every stroke. */
+const RING = "translate(966 958) rotate(-41.7)";
+const BACK = "M -780 0 A 780 230 0 0 0 780 0";
+/** The front of the ring, split so a gap opens just before the moon. */
+const FRONT = ["M 780 0 A 780 230 0 0 0 342 -207", "M 176 -224 A 780 230 0 0 0 -780 0"];
+
 /**
- * EdOrbit mark: a planet with a tilted ring that passes behind it at the top
- * and in front of it at the bottom, and a small moon riding the ring.
+ * EdOrbit mark: a planet with a tilted ring that passes behind it, then in
+ * front of it, with a moon riding the ring. Paper-coloured gaps separate the
+ * front of the ring from the planet's outline.
  */
 export function Logo({ size = 30, className = "" }: { size?: number; className?: string }) {
+  const clip = useId();
   return (
     <svg
-      viewBox="0 0 32 32"
+      viewBox="330 330 1270 1270"
       width={size}
       height={size}
       fill="none"
+      stroke="currentColor"
+      strokeWidth={38}
+      strokeLinecap="round"
       aria-hidden="true"
       className={className}
     >
-      <g transform="translate(16 16) rotate(-24)">
-        <path
-          d="M -14 0 A 14 5.2 0 0 1 14 0"
-          stroke="currentColor"
-          strokeWidth={2}
-          strokeLinecap="round"
-        />
+      <defs>
+        <clipPath id={clip}>
+          <circle cx="965" cy="950" r="600" />
+        </clipPath>
+      </defs>
+      <path transform={RING} d={BACK} />
+      <circle cx="965" cy="950" r="535" fill="var(--paper)" />
+      <g clipPath={`url(#${clip})`}>
+        <g transform={RING} stroke="var(--paper)" strokeWidth={100} strokeLinecap="butt">
+          {FRONT.map((d) => (
+            <path key={d} d={d} />
+          ))}
+        </g>
       </g>
-      <circle cx="16" cy="16" r="7.2" fill="var(--paper)" stroke="currentColor" strokeWidth={2.2} />
-      <path
-        d="M 12.2 19.6 A 5 5 0 0 0 19.8 19.8"
-        stroke="currentColor"
-        strokeWidth={1.4}
-        strokeLinecap="round"
-        opacity={0.45}
-      />
-      <g transform="translate(16 16) rotate(-24)">
-        <path
-          d="M 14 0 A 14 5.2 0 0 1 -14 0"
-          stroke="currentColor"
-          strokeWidth={2}
-          strokeLinecap="round"
-        />
-        <circle cx="14" cy="0" r="2.6" fill="currentColor" />
+      <g transform={RING}>
+        {FRONT.map((d) => (
+          <path key={d} d={d} />
+        ))}
+        <circle cx="176" cy="-224" r="68" fill="currentColor" stroke="none" />
       </g>
     </svg>
   );

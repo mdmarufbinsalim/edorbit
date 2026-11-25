@@ -59,7 +59,8 @@ The contract still assumes every concept is a numerical simulation. Generalise i
 ### Widget kit (reusable, non-simulation)
 
 - [x] Timeline (scrub through dated events)
-- [x] Map with sketch markers and routes
+- [x] Map with sketch markers
+- [ ] Routes on maps (needs sourced route data)
 - [ ] Before/after compare slider
 - [x] Ordering / sorting challenge ("put these in order")
 - [ ] Step-through diagram (click next to reveal each stage)
@@ -98,7 +99,7 @@ Candidates, not commitments. Each needs a proposal issue first.
 
 ## Phase 5 — Open-source release
 
-- [ ] `docs/adding-a-concept.md` walkthrough with a non-STEM example
+- [x] `docs/adding-a-concept.md` walkthrough with a non-STEM example
 - [ ] Example contribution: add a concept with zero changes outside `packages/concepts` (and its domain package)
 - [ ] Accessibility pass (keyboard, contrast, reduced motion, text alternatives for every widget)
 - [ ] Performance pass (lazy widgets and scenes, no per-frame React renders)

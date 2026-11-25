@@ -50,12 +50,12 @@ export default function CopyRace() {
   return (
     <div className="space-y-6">
       <div className="grid gap-6 md:grid-cols-2">
-        <div className="space-y-3">
+        <div className="min-w-0 space-y-3">
           <p className="text-sm text-muted">You, the scribe</p>
           <div className="flex items-start gap-4">
             <svg
               viewBox="0 0 190 300"
-              className="w-40 shrink-0 sm:w-48"
+              className="w-28 shrink-0 sm:w-48"
               role="img"
               aria-label={`Your page: ${onPage} of ${page} lines copied`}
             >
@@ -83,11 +83,11 @@ export default function CopyRace() {
                 />
               ))}
             </svg>
-            <div className="space-y-4">
+            <div className="min-w-0 space-y-4">
               <button
                 type="button"
                 onClick={copy}
-                className="rounded-full border-[2.5px] border-[var(--ink)] bg-[var(--ink)] px-6 py-3 text-lg font-medium text-[var(--paper)] transition hover:-translate-y-0.5 active:translate-y-0"
+                className="rounded-full border-[2.5px] border-[var(--ink)] bg-[var(--ink)] px-5 py-3 text-base font-medium sm:px-6 sm:text-lg text-[var(--paper)] transition hover:-translate-y-0.5 active:translate-y-0"
               >
                 Copy a line
               </button>
@@ -113,7 +113,7 @@ export default function CopyRace() {
           </div>
         </div>
 
-        <div className="space-y-3">
+        <div className="min-w-0 space-y-3">
           <p className="text-sm text-muted">The press, in the same working time</p>
           <div className="relative h-64 overflow-hidden rounded-xl border-2 border-dashed border-[var(--faint)]">
             <HandPress3D running={lines > 0} sheets={pressPages} />

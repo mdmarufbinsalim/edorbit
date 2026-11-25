@@ -6,6 +6,8 @@ EdOrbit is an open-source platform of interactive concepts from any field: physi
 
 The first concept, **Why don't satellites fall down?**, is the reference implementation. It has Newton's cannon, Kepler's laws, a 3D playground and missions that check themselves.
 
+The second, **How did one machine flood Europe with books?**, is the first history concept. It has no simulation: a 3D hand press racing a scribe, a timeline map of early press towns, a Gutenberg Bible page to explore, and a 3D map playground, all backed by cited sources.
+
 > Status: early development. See [checklist.md](checklist.md).
 
 ## Quick start
@@ -43,14 +45,15 @@ Every concept follows the same short arc:
 ```
 apps/web            Next.js app shell: routing, layout, discovery
 packages/core       Concept contract, simulation engine, units (no React/Three)
-packages/physics    Pure physics models (a domain package; more domains will follow)
+packages/physics    Pure physics models (a domain package)
+packages/history    Dated events, chronology and map data (a domain package)
 packages/rendering  Reusable React Three Fiber components
 packages/ui         Sketch design system, learning components, controls
 packages/concepts   One directory per concept
 docs/               Architecture, contribution and content standards
 ```
 
-Domain packages (`physics` today) hold pure, tested models with no UI dependencies. ESLint enforces this boundary. See [docs/architecture.md](docs/architecture.md).
+Domain packages (`physics`, `history`) hold pure, tested models with no UI dependencies. ESLint enforces this boundary. See [docs/architecture.md](docs/architecture.md).
 
 ## Contributing
 

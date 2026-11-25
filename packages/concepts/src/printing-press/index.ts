@@ -23,7 +23,6 @@ export const printingPress = defineConcept<unknown, NoParams>({
   widgets: {
     race: lazy(() => import("./widgets/CopyRace")),
     "spread-map": lazy(() => import("./widgets/PressMap")),
-    "theses-spread": lazy(() => import("./widgets/ThesesSpread")),
     "bible-page": lazy(() => import("./widgets/BiblePage")),
     "press-playground": lazy(() => import("./widgets/PressPlayground")),
   },

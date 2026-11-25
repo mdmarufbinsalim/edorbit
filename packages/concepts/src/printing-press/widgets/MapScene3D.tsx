@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useEffect, useRef, useState } from "react";
+import { useFrame, useThree } from "@react-three/fiber";
 import type { Group } from "three";
 import { equirectangular, type LonLat } from "@edorbit/core";
 import { EUROPE_BOUNDS, europeCoastlines } from "@edorbit/history";
 import { GroundLines, InkCylinder, Label, SceneCanvas, useThemeColors } from "@edorbit/rendering";
-import { routes, townById, type PressTown } from "../data";
+import type { PressTown } from "../data";
 
 /** Map width in scene units. */
 const W = 20;
@@ -18,7 +18,6 @@ const toScene = (p: LonLat): [number, number] => {
 const coast = europeCoastlines.map((l) => l.map(toScene));
 
 export interface MapLayers {
-  routes: boolean;
   universities: boolean;
   rivers: boolean;
 }
@@ -94,6 +93,20 @@ function Pillar({
   );
 }
 
+const CAMERA: [number, number, number] = [0, 13, 11];
+const CAMERA_LENGTH = Math.hypot(...CAMERA);
+
+/** Pull the camera back on narrow screens so all of Europe stays in view. */
+function FitToWidth() {
+  const camera = useThree((s) => s.camera);
+  const aspect = useThree((s) => s.size.width / Math.max(1, s.size.height));
+  useEffect(() => {
+    camera.position.setLength(CAMERA_LENGTH * Math.max(1, 1.3 / aspect));
+    camera.updateProjectionMatrix();
+  }, [camera, aspect]);
+  return null;
+}
+
 /** 3D sandbox: press towns rise as pillars on a sketch map of Europe. */
 export default function MapScene3D({
   towns,
@@ -109,8 +122,9 @@ export default function MapScene3D({
   onOpen: (id: string) => void;
 }) {
   return (
-    <SceneCanvas className="h-full w-full" cameraPosition={[0, 13, 11]}>
-      <Ground towns={towns} layers={layers} />
+    <SceneCanvas className="h-full w-full" cameraPosition={CAMERA}>
+      <FitToWidth />
+      <Ground />
       {towns.map((t) => (
         <Pillar
           key={t.id}
@@ -125,14 +139,8 @@ export default function MapScene3D({
   );
 }
 
-function Ground({ towns, layers }: { towns: readonly PressTown[]; layers: MapLayers }) {
-  const { muted, faint, paper } = useThemeColors();
-  const routeLines = useMemo(() => {
-    const ids = new Set(towns.map((t) => t.id));
-    return routes
-      .filter(([a, b]) => ids.has(a) && ids.has(b))
-      .map(([a, b]) => [toScene(townById.get(a)!.lonLat), toScene(townById.get(b)!.lonLat)]);
-  }, [towns]);
+function Ground() {
+  const { muted, paper } = useThemeColors();
   return (
     <>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]}>
@@ -140,7 +148,6 @@ function Ground({ towns, layers }: { towns: readonly PressTown[]; layers: MapLay
         <meshBasicMaterial color={paper} />
       </mesh>
       <GroundLines lines={coast} color={muted} />
-      {layers.routes && <GroundLines lines={routeLines} color={faint} height={0.005} />}
     </>
   );
 }

@@ -65,9 +65,9 @@ export function OrderingChallenge({
             <Reorder.Item
               key={id}
               value={id}
-              className="flex cursor-grab items-center gap-3 rounded-xl border-2 border-[var(--ink)] bg-[var(--paper)] px-4 py-3 active:cursor-grabbing"
+              className="flex cursor-grab items-center gap-2 rounded-xl border-2 border-[var(--ink)] bg-[var(--paper)] px-3 py-3 active:cursor-grabbing sm:gap-3 sm:px-4"
             >
-              <span className="w-6 text-lg text-faint tabular-nums">{i + 1}</span>
+              <span className="w-5 shrink-0 text-lg text-faint tabular-nums">{i + 1}</span>
               <span className="min-w-0 flex-1">
                 <RichText text={item.label} />
               </span>

@@ -40,7 +40,7 @@ export default function PressMap() {
           ))
         }
       </SketchMap>
-      <div className="space-y-6">
+      <div className="min-w-0 space-y-6">
         <Timeline
           label="Year"
           min={MAP_YEARS.from}

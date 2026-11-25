@@ -1,5 +1,5 @@
-import { firstWhere, spreadDays, upTo, type SpreadOptions } from "@edorbit/history";
-import { pressTowns, routes, THESES_START, townById, type PressTown } from "./data";
+import { firstWhere, upTo } from "@edorbit/history";
+import { pressTowns, townById, type PressTown } from "./data";
 
 /* ---------- Copy by hand vs. print: approximate rates ---------- */
 
@@ -72,60 +72,6 @@ export function clusterStats(towns: readonly PressTown[]) {
   };
 }
 
-/* ---------- 1517: a thought experiment ---------- */
-
-/** Luther's Theses are traditionally dated 31 October 1517. Day 0 of the model. */
-export const THESES_DATE = { year: 1517, month: 10, day: 31 } as const;
-/** Days from 31 October to 31 December 1517. */
-export const DAYS_TO_YEAR_END = 61;
-
-export const SPREAD_DEFAULTS = { kmPerDay: 30, reprintDays: 21 } as const;
-export const SPREAD_RANGES = {
-  kmPerDay: { min: 10, max: 60, step: 5 },
-  reprintDays: { min: 3, max: 40, step: 1 },
-} as const;
-
-const network = {
-  places: Object.fromEntries(
-    pressTowns.filter((t) => t.year <= THESES_DATE.year).map((t) => [t.id, t.lonLat]),
-  ),
-  routes,
-};
-
-/** Day each town has its own printed copies, for a given travel speed and reprint time. */
-export const thesesSpread = ({
-  kmPerDay,
-  reprintDays,
-}: {
-  kmPerDay: number;
-  reprintDays: number;
-}) =>
-  spreadDays(network, THESES_START, {
-    metresPerDay: kmPerDay * 1000,
-    reprintDays,
-  } satisfies SpreadOptions);
-
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-/** Calendar date `days` after 31 October 1517 (Julian calendar, as used then). */
-export function dateAfterTheses(days: number): string {
-  let year: number = THESES_DATE.year;
-  let month: number = THESES_DATE.month - 1;
-  let day = THESES_DATE.day + Math.floor(days);
-  for (;;) {
-    const len = DAYS_IN_MONTH[month]! + (month === 1 && year % 4 === 0 ? 1 : 0);
-    if (day <= len) break;
-    day -= len;
-    month++;
-    if (month === 12) {
-      month = 0;
-      year++;
-    }
-  }
-  return `${day} ${MONTHS[month]} ${year}`;
-}
-
 /* ---------- Progress keys shared by widgets and missions ---------- */
 
 export const PROGRESS = {
@@ -135,9 +81,6 @@ export const PROGRESS = {
   townsOpened: "towns-opened",
   /** True once the ordering challenge was checked and correct. */
   eventOrder: "event-order",
-  /** Current settings of the 1517 thought experiment. */
-  spreadKmPerDay: "spread-km-per-day",
-  spreadReprintDays: "spread-reprint-days",
   /** Parts of the Bible page the learner has tapped. */
   pageParts: "page-parts",
 } as const;

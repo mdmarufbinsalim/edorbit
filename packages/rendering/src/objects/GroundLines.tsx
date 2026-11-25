@@ -5,7 +5,7 @@ import { BufferGeometry, Float32BufferAttribute } from "three";
 
 /**
  * Polylines laid flat on the ground plane (y = `height`), e.g. coastlines or
- * routes. Points are [x, z] in scene units; the caller does the projection.
+ * borders. Points are [x, z] in scene units; the caller does the projection.
  */
 export function GroundLines({
   lines,

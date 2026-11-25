@@ -1,16 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { lesson } from "./lesson";
-import { missions, baselDay, eventsInOrder } from "./missions";
-import { ORDER_START, orderEvents, pressTowns, routes, townById } from "./data";
+import { missions, eventsInOrder } from "./missions";
+import { ORDER_START, orderEvents, pressTowns, townById } from "./data";
 import {
-  DAYS_TO_YEAR_END,
   PROGRESS,
   booksPerYear,
   daysToCopyBook,
   firstEnglishTown,
   firstNonGermanTown,
   RATES,
-  dateAfterTheses,
 } from "./model";
 import { references } from "./references";
 
@@ -22,9 +20,6 @@ describe("data", () => {
   it("every town and event cites known sources", () => {
     for (const t of [...pressTowns, ...orderEvents])
       for (const s of t.sourceIds) expect(sourceIds.has(s)).toBe(true);
-  });
-  it("routes use known towns", () => {
-    for (const [a, b] of routes) expect(townById.has(a) && townById.has(b)).toBe(true);
   });
 });
 
@@ -61,16 +56,5 @@ describe("missions are achievable with their hints", () => {
     expect(eventsInOrder(ORDER_START)).toBe(false);
     expect(eventsInOrder(["press", "bible", "columbus", "luther", "newspaper"])).toBe(true);
     expect(m("order").check({}, { [PROGRESS.eventOrder]: true })).toBe(true);
-  });
-  it("basel: defaults miss New Year, the hint makes it", () => {
-    expect(baselDay({})).toBeGreaterThan(DAYS_TO_YEAR_END);
-    expect(m("basel").check({}, {})).toBe(false);
-    const hint = { [PROGRESS.spreadKmPerDay]: 40, [PROGRESS.spreadReprintDays]: 7 };
-    expect(m("basel").check({}, hint)).toBe(true);
-  });
-  it("dates count from 31 October 1517", () => {
-    expect(dateAfterTheses(0)).toBe("31 Oct 1517");
-    expect(dateAfterTheses(DAYS_TO_YEAR_END)).toBe("31 Dec 1517");
-    expect(dateAfterTheses(62)).toBe("1 Jan 1518");
   });
 });

@@ -559,68 +559,6 @@ export const pressTowns: readonly PressTown[] = [
 
 export const townById = new Map(pressTowns.map((t) => [t.id, t]));
 
-/**
- * Routes for the 1517 thought experiment: a simplified network of roads,
- * rivers and sea lanes between press towns. Straight lines stand in for the
- * real routes, which wound around hills and coasts.
- */
-export const routes: readonly (readonly [string, string])[] = [
-  ["wittenberg", "leipzig"],
-  ["wittenberg", "rostock"],
-  ["leipzig", "nuremberg"],
-  ["leipzig", "prague"],
-  ["leipzig", "lubeck"],
-  ["rostock", "lubeck"],
-  ["lubeck", "odense"],
-  ["odense", "stockholm"],
-  ["nuremberg", "bamberg"],
-  ["nuremberg", "augsburg"],
-  ["nuremberg", "plzen"],
-  ["plzen", "prague"],
-  ["prague", "vienna"],
-  ["vienna", "buda"],
-  ["vienna", "krakow"],
-  ["bamberg", "mainz"],
-  ["augsburg", "ulm"],
-  ["ulm", "basel"],
-  ["augsburg", "venice"],
-  ["basel", "strasbourg"],
-  ["strasbourg", "speyer"],
-  ["speyer", "mainz"],
-  ["mainz", "cologne"],
-  ["cologne", "utrecht"],
-  ["cologne", "leuven"],
-  ["utrecht", "deventer"],
-  ["leuven", "antwerp"],
-  ["antwerp", "bruges"],
-  ["bruges", "westminster"],
-  ["westminster", "oxford"],
-  ["strasbourg", "paris"],
-  ["basel", "geneva"],
-  ["geneva", "lyon"],
-  ["lyon", "paris"],
-  ["paris", "bruges"],
-  ["lyon", "toulouse"],
-  ["toulouse", "barcelona"],
-  ["barcelona", "valencia"],
-  ["valencia", "seville"],
-  ["seville", "salamanca"],
-  ["seville", "lisbon"],
-  ["geneva", "milan"],
-  ["milan", "venice"],
-  ["venice", "padua"],
-  ["padua", "bologna"],
-  ["bologna", "florence"],
-  ["florence", "rome"],
-  ["rome", "subiaco"],
-  ["rome", "naples"],
-  ["venice", "cetinje"],
-];
-
-/** Where the Ninety-five Theses started, and the towns where printings from late 1517 survive. */
-export const THESES_START = "wittenberg";
-export const THESES_REPRINTS_1517 = ["leipzig", "nuremberg", "basel"] as const;
-
 /** Events for the "put them in order" challenge. */
 export const orderEvents: readonly DatedEvent[] = [
   {

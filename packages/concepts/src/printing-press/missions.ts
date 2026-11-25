@@ -3,16 +3,7 @@ import { isInOrder } from "@edorbit/history";
 import { formatYear } from "@edorbit/history";
 import type { NoParams } from "../types";
 import { orderEvents } from "./data";
-import {
-  DAYS_TO_YEAR_END,
-  PROGRESS,
-  SPREAD_DEFAULTS,
-  firstEnglishTown,
-  firstNonGermanTown,
-  pressPagesDuring,
-  RATES,
-  thesesSpread,
-} from "./model";
+import { PROGRESS, firstEnglishTown, firstNonGermanTown, pressPagesDuring, RATES } from "./model";
 
 const opened = (progress: Readonly<Record<string, unknown>>) => {
   const v = progress[PROGRESS.townsOpened];
@@ -22,13 +13,6 @@ const num = (v: unknown, fallback: number) => (typeof v === "number" ? v : fallb
 
 const abroad = firstNonGermanTown();
 const england = firstEnglishTown();
-
-/** Day Basel prints in the 1517 thought experiment with the learner's current settings. */
-export const baselDay = (progress: Readonly<Record<string, unknown>>) =>
-  thesesSpread({
-    kmPerDay: num(progress[PROGRESS.spreadKmPerDay], SPREAD_DEFAULTS.kmPerDay),
-    reprintDays: num(progress[PROGRESS.spreadReprintDays], SPREAD_DEFAULTS.reprintDays),
-  }).get("basel") ?? Infinity;
 
 export const missions: readonly MissionDefinition<NoParams>[] = [
   {
@@ -71,17 +55,6 @@ export const missions: readonly MissionDefinition<NoParams>[] = [
       "England got printing later than Italy or France. A merchant who had learned to print abroad brought a press home.",
     check: (_, p) => opened(p).includes(england.id),
     success: `${england.name}, ${formatYear(england)}. ${england.printer} had learned printing in Bruges, where he printed the first book in English.`,
-  },
-  {
-    id: "basel",
-    title: "Reach Basel in 1517",
-    goal: "In the 1517 thought experiment, make Basel print the Theses before the end of 1517, as it really did.",
-    hint: "Try copies travelling about 40 km a day, and printers who reprint in about a week.",
-    explain:
-      "The model adds up the travel time on each route and the reprint time in every town on the way. Basel is several towns from Wittenberg, so quick printers matter even more than quick travel.",
-    check: (_, p) => baselDay(p) <= DAYS_TO_YEAR_END,
-    success:
-      "In real life copies did reach Basel that fast. Merchants, students and letters carried texts quickly between trading cities.",
   },
 ];
 

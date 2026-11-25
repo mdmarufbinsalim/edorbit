@@ -37,15 +37,14 @@ export const lesson: LessonDefinition = {
       title: "Ideas go viral, 1517",
       body: [
         "In 1517 a teacher called Martin Luther wrote 95 arguments, the **Ninety-five Theses**, against the Church selling indulgences (payments said to reduce punishment for sins). Within about two months, printers in other cities were printing them.",
-        "Below is a **thought experiment**, not a record. Copies travel along trade routes and each town reprints them. Change how fast copies travel and how fast printers work.",
+        "Printers in Leipzig, Nuremberg and Basel all printed them before the year was out. Print let one teacher's arguments reach readers far beyond his own town.",
       ],
-      widget: "theses-spread",
       quiz: {
         question:
           "Copies of the Theses printed in late 1517 survive from three cities. Which was not one of them?",
         choices: ["Leipzig", "Nuremberg", "Basel", "Paris"],
         answerIndex: 3,
-        why: "Leipzig, Nuremberg and Basel all printed the Theses before the year was out. Each had busy trade links with Wittenberg, where Luther lived.",
+        why: "Printings from late 1517 survive from Leipzig, Nuremberg and Basel. None is known from Paris.",
       },
     },
   ],
@@ -54,7 +53,6 @@ export const lesson: LessonDefinition = {
     "A first-press year is the earliest dated or datable printing that survives. Some presses started a little earlier. Years marked “c.” are approximate.",
     "The race uses rough averages, which are estimates. Real scribes and printers varied a lot, and a printer spent hours setting the type for each page before printing could start.",
     "“Millions of books” is an estimate. Historians' totals for copies printed by 1500 run from under 10 million to about 20 million.",
-    "The 1517 spread is a thought experiment. Real copies went by many routes, and straight lines stand in for winding roads, rivers and sea lanes.",
     "Each town's language is what most people there spoke. Many early books were printed in Latin, whatever the local language.",
     "Coastlines are modern. A few coasts, such as in the Low Countries, looked a little different then.",
   ],

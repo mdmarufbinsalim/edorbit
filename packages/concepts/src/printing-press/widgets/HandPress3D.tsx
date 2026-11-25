@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useEffect, useRef } from "react";
+import { useFrame, useThree } from "@react-three/fiber";
 import type { Group } from "three";
 import { InkBox, InkCylinder, Label, SceneCanvas, useThemeColors } from "@edorbit/rendering";
 
@@ -117,18 +117,33 @@ function Press({ running, sheets }: { running: boolean; sheets: number }) {
   );
 }
 
+const CAMERA: [number, number, number] = [4.2, 2.4, 5.4];
+const CAMERA_LENGTH = Math.hypot(...CAMERA);
+
+/** Pull the camera back on narrow screens so the whole press stays in view. */
+function FitToWidth() {
+  const camera = useThree((s) => s.camera);
+  const aspect = useThree((s) => s.size.width / Math.max(1, s.size.height));
+  useEffect(() => {
+    camera.position.setLength(CAMERA_LENGTH * Math.max(1, 1.5 / aspect));
+    camera.updateProjectionMatrix();
+  }, [camera, aspect]);
+  return null;
+}
+
 /** A 3D wooden hand press, drawn like a pen sketch, that keeps pulling while `running`. */
 export function HandPress3D({ running, sheets }: { running: boolean; sheets: number }) {
   return (
     <SceneCanvas
       className="h-full w-full"
-      cameraPosition={[4.2, 2.4, 5.4]}
+      cameraPosition={CAMERA}
       fallback={
         <p className="p-6 text-sm text-muted">
           3D is not available in this browser. The counters still show the press's output.
         </p>
       }
     >
+      <FitToWidth />
       <Press running={running} sheets={sheets} />
     </SceneCanvas>
   );

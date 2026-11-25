@@ -66,7 +66,7 @@ export function Timeline({
         </label>
         <span className="text-3xl font-medium tabular-nums">{shown}</span>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3 sm:gap-4">
         {playable && (
           <button
             type="button"
@@ -94,17 +94,23 @@ export function Timeline({
             }}
             className="sketch-range w-full"
           />
-          {marks.map((m) => (
-            <span
-              key={`${m.value}-${m.label}`}
-              aria-hidden="true"
-              className="absolute top-7 -translate-x-1/2 text-[11px] whitespace-nowrap text-muted"
-              style={{ left: `${pct(m.value)}%` }}
-            >
-              <span className="mx-auto mb-0.5 block h-2 w-px bg-[var(--faint)]" />
-              {m.label}
-            </span>
-          ))}
+          {marks.map((m) => {
+            const at = pct(m.value);
+            // Keep end labels inside the track so they never widen the page.
+            const align = at <= 5 ? "" : at >= 95 ? "-translate-x-full" : "-translate-x-1/2";
+            const tick = at <= 5 ? "ml-0" : at >= 95 ? "ml-auto" : "mx-auto";
+            return (
+              <span
+                key={`${m.value}-${m.label}`}
+                aria-hidden="true"
+                className={`absolute top-7 text-[11px] whitespace-nowrap text-muted ${align}`}
+                style={{ left: `${at}%` }}
+              >
+                <span className={`${tick} mb-0.5 block h-2 w-px bg-[var(--faint)]`} />
+                {m.label}
+              </span>
+            );
+          })}
         </div>
       </div>
     </div>

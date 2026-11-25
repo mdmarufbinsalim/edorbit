@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Pure history content data and helpers: dated events, places, chronology and spread along routes. Framework-agnostic: no React, no Three.js.",
+  "description": "Pure history content data and helpers: dated events, places, chronology and map data. Framework-agnostic: no React, no Three.js.",
   "exports": {
     ".": "./src/index.ts",
     "./*": "./src/*.ts"

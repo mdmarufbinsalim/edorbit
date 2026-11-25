@@ -19,7 +19,6 @@ const MapScene3D = lazy(() => import("./MapScene3D"));
 
 const YEARS = { from: 1450, to: 1520 };
 const LAYERS = [
-  { id: "routes", label: "Trade routes", defaultVisible: true },
   { id: "universities", label: "Universities", defaultVisible: false },
   { id: "rivers", label: "Big rivers", defaultVisible: false },
 ];
@@ -34,7 +33,6 @@ export default function PressPlayground() {
   const [year, setYear] = useState(1500);
   const [langs, setLangs] = useState<readonly Language[]>(languages);
   const [layers, setLayers] = useState<MapLayers>({
-    routes: true,
     universities: false,
     rivers: false,
   });
@@ -66,7 +64,7 @@ export default function PressPlayground() {
             Drag to spin · scroll to zoom · tap a pillar. Taller means printing for longer.
           </p>
         </SketchBox>
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           <Timeline
             label="Year"
             min={YEARS.from}
@@ -118,8 +116,7 @@ export default function PressPlayground() {
           </div>
           <p className="text-xs text-muted">
             Of all {all.count} towns on this map, {pct(all.university)} had a university and{" "}
-            {pct(all.river)} sat on a big river. Most of the rest were trading cities. Printers went
-            where there were buyers, money and ways to ship books.
+            {pct(all.river)} sat on a big river.
           </p>
           <TownCard town={selected} empty="Tap a pillar to see who printed there first." />
         </div>

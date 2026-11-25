@@ -17,7 +17,7 @@ export interface ParameterSliderProps {
   onChange: (value: number) => void;
 }
 
-/** Keyboard-accessible range input with a numeric readout in display units. */
+/** Ink-line range input with a big, friendly value readout. Keyboard accessible. */
 export function ParameterSlider({
   label,
   unit,
@@ -30,15 +30,15 @@ export function ParameterSlider({
   onChange,
 }: ParameterSliderProps) {
   const id = useId();
-  const shown = formatSig(value * displayScale, 4);
+  const shown = formatSig(value * displayScale, 3);
   return (
-    <div className="space-y-1">
-      <div className="flex items-baseline justify-between text-sm">
-        <label htmlFor={id} className="text-slate-300">
+    <div>
+      <div className="flex items-baseline justify-between gap-3">
+        <label htmlFor={id} className="text-sm text-muted">
           {label}
         </label>
-        <span className="font-mono text-xs text-slate-200">
-          {shown} {unit}
+        <span className="text-lg font-medium tabular-nums">
+          {shown} <span className="text-sm text-muted">{unit}</span>
         </span>
       </div>
       <input
@@ -49,12 +49,12 @@ export function ParameterSlider({
         step={step}
         value={value}
         aria-valuetext={`${shown} ${unit}`}
-        aria-describedby={description ? `${id}-desc` : undefined}
+        aria-describedby={description ? `${id}-d` : undefined}
         onChange={(e) => onChange(e.target.valueAsNumber)}
-        className="w-full accent-accent"
+        className="sketch-range w-full"
       />
       {description && (
-        <p id={`${id}-desc`} className="text-xs text-slate-500">
+        <p id={`${id}-d`} className="text-xs text-muted">
           {description}
         </p>
       )}

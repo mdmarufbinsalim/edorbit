@@ -3,8 +3,9 @@ import type {
   CalculatorDefinition,
   ConceptMetadata,
   EquationDefinition,
-  ExperimentDefinition,
+  FeaturedFormula,
   LessonDefinition,
+  MissionDefinition,
   NumericParams,
   SceneProps,
   ScientificReference,
@@ -12,18 +13,22 @@ import type {
 } from "@orbital/core";
 
 /**
- * Everything a concept contributes. Data (lesson, equations, references) is
- * declarative; executable parts (model, scene) are reviewed TypeScript.
+ * Everything a concept contributes. Story, equations, and references are
+ * declarative data; models, widgets, and scenes are reviewed TypeScript.
  */
 export interface ConceptModule<State, Params extends NumericParams> {
   metadata: ConceptMetadata;
   lesson: LessonDefinition;
   equations: readonly EquationDefinition[];
   calculators?: readonly CalculatorDefinition[];
+  /** The one equation explained front and centre. */
+  formula?: FeaturedFormula;
   simulation: SimulationSpec<State, Params>;
-  experiments: readonly ExperimentDefinition<Params>[];
+  missions: readonly MissionDefinition<Params>[];
   references: readonly ScientificReference[];
-  /** Lazily loaded 3D scene. */
+  /** Small hands-on 2D widgets referenced by story chapters. Lazily loaded. */
+  widgets?: Readonly<Record<string, ComponentType>>;
+  /** Lazily loaded 3D playground scene. */
   Scene: ComponentType<SceneProps<State, Params>>;
 }
 

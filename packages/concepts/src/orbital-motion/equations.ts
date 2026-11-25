@@ -105,10 +105,20 @@ export const equations: readonly EquationDefinition[] = [
   {
     id: "circular-speed",
     name: "Circular orbital speed",
-    latex: "v_c = \\sqrt{\\frac{\\mu}{r}}",
+    latex: "v = \\sqrt{\\frac{G M}{r}}",
     description:
       "Setting r = a in vis-viva gives the speed for a circular orbit. Gravity supplies exactly the centripetal acceleration $v^2/r$.",
-    variables: [{ ...v, symbol: "v_c", name: "Circular speed" }, mu, r],
+    variables: [
+      { ...v, name: "Circular speed" },
+      {
+        symbol: "G",
+        name: "Gravitational constant",
+        unit: "m³ kg⁻¹ s⁻²",
+        description: "6.6743 × 10⁻¹¹",
+      },
+      { symbol: "M", name: "Central mass", unit: "kg", description: "Earth: 5.97 × 10²⁴ kg" },
+      r,
+    ],
   },
   {
     id: "kepler-third",

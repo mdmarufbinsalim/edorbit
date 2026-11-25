@@ -20,7 +20,7 @@ export function Label({
       zIndexRange={[10, 0]}
       style={{ pointerEvents: "none" }}
     >
-      <span className="whitespace-nowrap rounded bg-space-950/80 px-1.5 py-0.5 font-mono text-[10px] text-slate-200">
+      <span className="whitespace-nowrap text-xs text-[var(--ink)] [text-shadow:0_0_4px_var(--paper),0_0_4px_var(--paper)]">
         {children}
       </span>
     </Html>

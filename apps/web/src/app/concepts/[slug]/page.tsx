@@ -16,7 +16,10 @@ export async function generateMetadata({
   const { slug } = await params;
   const concept = conceptRegistry.get(slug);
   return concept
-    ? { title: concept.metadata.title, description: concept.metadata.description }
+    ? {
+        title: concept.metadata.title,
+        description: concept.metadata.hook ?? concept.metadata.description,
+      }
     : {};
 }
 
@@ -27,28 +30,19 @@ export default async function ConceptPage({ params }: PageProps<"/concepts/[slug
   const { metadata } = concept;
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      <Link
-        href="/"
-        className="font-mono text-xs tracking-widest text-accent-muted hover:text-accent"
-      >
-        ← ALL CONCEPTS
-      </Link>
-      <div className="mt-6">
-        {concept.module ? (
-          <ConceptView slug={slug} />
-        ) : (
-          <div className="space-y-4">
-            <h1 className="text-4xl font-semibold text-slate-50">{metadata.title}</h1>
-            <p className="text-lg text-slate-300">{metadata.question}</p>
-            <p className="text-slate-400">{metadata.description}</p>
-            <p className="rounded-lg border border-dashed border-space-700 p-6 text-sm text-slate-500">
-              This concept is planned and not yet implemented. Contributions are welcome — see
-              CONTRIBUTING.md.
-            </p>
-          </div>
-        )}
-      </div>
+    <main className="site-px">
+      {concept.module ? (
+        <ConceptView slug={slug} />
+      ) : (
+        <div className="max-w-3xl space-y-6 py-24">
+          <h1 className="text-4xl leading-tight font-medium sm:text-6xl">{metadata.title}</h1>
+          <p className="text-xl text-muted">{metadata.hook ?? metadata.question}</p>
+          <p className="text-lg">This one is still being built.</p>
+          <Link href="/" className="inline-block text-lg underline decoration-2 underline-offset-4">
+            ← Try another concept
+          </Link>
+        </div>
+      )}
     </main>
   );
 }

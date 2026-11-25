@@ -2,6 +2,7 @@
 
 import type { VisualLayerDefinition } from "@orbital/core";
 
+/** Pill toggles for what's drawn in the scene. */
 export function LayerToggles({
   layers,
   values,
@@ -12,19 +13,24 @@ export function LayerToggles({
   onChange: (id: string, visible: boolean) => void;
 }) {
   return (
-    <fieldset className="space-y-1">
-      <legend className="mb-1 text-sm font-semibold text-slate-300">Visual layers</legend>
-      {layers.map((layer) => (
-        <label key={layer.id} className="flex items-center gap-2 text-sm text-slate-300">
-          <input
-            type="checkbox"
-            checked={values[layer.id] ?? false}
-            onChange={(e) => onChange(layer.id, e.target.checked)}
-            className="accent-accent"
-          />
-          {layer.label}
-        </label>
-      ))}
+    <fieldset>
+      <legend className="mb-2 text-sm text-muted">Show</legend>
+      <div className="flex flex-wrap gap-2">
+        {layers.map((l) => {
+          const on = values[l.id] ?? false;
+          return (
+            <button
+              key={l.id}
+              type="button"
+              aria-pressed={on}
+              onClick={() => onChange(l.id, !on)}
+              className={`rounded-full border-2 px-3 py-1 text-xs transition ${on ? "border-[var(--ink)] bg-[var(--ink)] text-[var(--paper)]" : "border-dashed border-[var(--faint)] text-muted"}`}
+            >
+              {l.label}
+            </button>
+          );
+        })}
+      </div>
     </fieldset>
   );
 }

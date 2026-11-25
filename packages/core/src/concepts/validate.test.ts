@@ -3,29 +3,26 @@ import { validateConcept, type ValidatableConcept } from "./validate";
 
 const base: ValidatableConcept = {
   lesson: {
-    introduction: "",
-    whyItMatters: "",
-    realWorldExamples: [],
-    learningObjectives: [],
-    sections: [{ id: "s", heading: "S", body: [], equationIds: ["eq"] }],
+    story: [
+      {
+        id: "a",
+        title: "A",
+        body: [],
+        widget: "w",
+        quiz: { question: "", choices: ["x", "y"], answerIndex: 1, why: "" },
+      },
+    ],
     limitations: [],
   },
   equations: [{ id: "eq", name: "Eq", latex: "x", description: "", variables: [] }],
-  experiments: [
-    {
-      id: "x",
-      title: "",
-      question: "",
-      setup: { v: 5 },
-      predictionPrompt: "",
-      explanation: "",
-      watch: ["r"],
-    },
-  ],
+  calculators: [{ id: "c", equationId: "eq", title: "", inputs: [], outputs: [] }],
+  formula: { equationId: "eq", calculatorId: "c", tagline: "", symbols: [] },
+  missions: [{ id: "m", title: "", goal: "", hint: "", check: () => true, success: "" }],
   defaultParameters: { v: 1 },
   parameterDefinitions: [{ key: "v", label: "v", unit: "", min: 0, max: 10, step: 1 }],
-  visualLayers: [{ id: "a", label: "A", defaultVisible: true }],
+  visualLayers: [{ id: "l", label: "L", defaultVisible: true }],
   readoutIds: ["r"],
+  widgetIds: ["w"],
 };
 
 describe("validateConcept", () => {
@@ -38,11 +35,20 @@ describe("validateConcept", () => {
       ...base,
       lesson: {
         ...base.lesson,
-        sections: [{ id: "s", heading: "", body: [], equationIds: ["missing"] }],
+        story: [
+          {
+            id: "a",
+            title: "",
+            body: [],
+            widget: "nope",
+            quiz: { question: "", choices: [], answerIndex: 0, why: "" },
+          },
+        ],
       },
+      formula: { equationId: "missing", calculatorId: "missing", tagline: "", symbols: [] },
       defaultParameters: { v: 99 },
-      experiments: [{ ...base.experiments[0]!, setup: { w: 1 }, watch: ["nope"] }],
+      readoutIds: ["r", "r"],
     });
-    expect(errors).toHaveLength(4);
+    expect(errors).toHaveLength(6);
   });
 });

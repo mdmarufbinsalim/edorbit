@@ -10,3 +10,5 @@ export * from "./effects/Starfield";
 export * from "./helpers/scale";
 export * from "./helpers/webgl";
 export * from "./helpers/useSimulationLoop";
+export * from "./objects/SketchGlobe";
+export * from "./helpers/useThemeColors";

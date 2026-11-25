@@ -50,22 +50,39 @@ export interface WorkedExample {
   result: string;
 }
 
-export interface LessonSection {
+export interface Quiz {
+  question: string;
+  choices: readonly string[];
+  answerIndex: number;
+  /** Shown after answering, right or wrong. */
+  why: string;
+}
+
+/** One short beat of the story: a sentence or two, an optional hands-on widget, an optional quiz. */
+export interface StoryChapter {
   id: string;
-  heading: string;
-  /** Plain paragraphs; inline math may be written as $...$. */
+  title: string;
+  /** Keep it short: 1–3 sentences per paragraph, $inline math$ allowed. */
   body: readonly string[];
-  equationIds?: readonly string[];
+  /** Key into the concept's `widgets` map. */
+  widget?: string;
+  quiz?: Quiz;
 }
 
 export interface LessonDefinition {
-  introduction: string;
-  whyItMatters: string;
-  realWorldExamples: readonly string[];
-  learningObjectives: readonly string[];
-  sections: readonly LessonSection[];
+  story: readonly StoryChapter[];
   /** Explicit statement of what the model simplifies or ignores. */
   limitations: readonly string[];
+}
+
+/** The one equation a concept puts front and centre, explained symbol by symbol in plain words. */
+export interface FeaturedFormula {
+  equationId: string;
+  /** Plain-language one-liner for the whole equation. */
+  tagline: string;
+  symbols: readonly { symbol: string; plain: string }[];
+  /** Calculator that turns the formula into a playground. */
+  calculatorId: string;
 }
 
 export interface ParameterDefinition<Key extends string = string> {
@@ -78,6 +95,8 @@ export interface ParameterDefinition<Key extends string = string> {
   /** Optional display scale, e.g. 1/1000 to show metres as km. */
   displayScale?: number;
   description?: string;
+  /** Hidden behind "more controls" to keep the default view simple. */
+  advanced?: boolean;
 }
 
 export interface VisualLayerDefinition {
@@ -86,19 +105,15 @@ export interface VisualLayerDefinition {
   defaultVisible: boolean;
 }
 
-export interface ExperimentDefinition<Params = Record<string, number>> {
+/** A goal the learner reaches by changing parameters. `check` must use the real model. */
+export interface MissionDefinition<Params = Record<string, number>> {
   id: string;
   title: string;
-  question: string;
-  /** Parameter overrides applied when the experiment starts. */
-  setup: Partial<Params>;
-  predictionPrompt: string;
-  /** Optional multiple-choice predictions; `answerIndex` marks the correct one. */
-  choices?: readonly string[];
-  answerIndex?: number;
-  /** Readout ids the user should watch while the experiment runs. */
-  watch?: readonly string[];
-  explanation: string;
+  goal: string;
+  hint: string;
+  check: (params: Params) => boolean;
+  /** Celebration + the physics behind it, shown on success. */
+  success: string;
 }
 
 export interface CalculatorInput {
@@ -116,6 +131,8 @@ export interface CalculatorOutput {
   unit: string;
   /** Inputs are in the display units declared on each input. */
   compute: (inputs: Readonly<Record<string, number>>) => number;
+  /** Optional fun comparison for the result, e.g. "faster than a bullet". */
+  say?: (value: number) => string;
 }
 
 /** Interactive calculator bound to an equation. Changing an input recomputes outputs. */

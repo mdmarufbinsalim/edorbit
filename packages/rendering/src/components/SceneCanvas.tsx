@@ -5,6 +5,7 @@ import { OrbitControls } from "@react-three/drei";
 import { useSyncExternalStore, type ReactNode } from "react";
 import { isWebGLAvailable } from "../helpers/webgl";
 import { Starfield } from "../effects/Starfield";
+import { useThemeColors } from "../helpers/useThemeColors";
 
 export interface SceneCanvasProps {
   children: ReactNode;
@@ -24,8 +25,9 @@ export function SceneCanvas({
   cameraPosition = [0, 4, 10],
   className,
   fallback,
-  stars = true,
+  stars = false,
 }: SceneCanvasProps) {
+  const { paper } = useThemeColors();
   // null during SSR/hydration, then the client's real capability.
   const support = useSyncExternalStore<boolean | null>(noopSubscribe, isWebGLAvailable, () => null);
 
@@ -33,7 +35,7 @@ export function SceneCanvas({
     return (
       <div className={className} role="img" aria-label="3D simulation unavailable">
         {fallback ?? (
-          <p className="p-6 text-sm text-slate-400">
+          <p className="p-6 text-sm text-muted">
             WebGL is not available in this browser, so the 3D simulation cannot be shown. The
             readouts and controls still reflect the underlying model.
           </p>
@@ -41,14 +43,15 @@ export function SceneCanvas({
       </div>
     );
 
+  // data-lenis-prevent: let the wheel zoom the camera instead of smooth-scrolling the page.
   return (
-    <div className={className}>
+    <div className={className} data-lenis-prevent onWheel={(e) => e.stopPropagation()}>
       {support && (
         <Canvas
           camera={{ position: cameraPosition, fov: 45, near: 0.01, far: 20_000 }}
           dpr={[1, 2]}
         >
-          <color attach="background" args={["#03060d"]} />
+          <color attach="background" args={[paper]} />
           <ambientLight intensity={0.25} />
           <directionalLight position={[10, 6, 4]} intensity={1.8} />
           {stars && <Starfield />}

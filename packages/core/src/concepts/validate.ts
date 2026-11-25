@@ -1,8 +1,9 @@
 import type {
   CalculatorDefinition,
   EquationDefinition,
-  ExperimentDefinition,
+  FeaturedFormula,
   LessonDefinition,
+  MissionDefinition,
   ParameterDefinition,
   VisualLayerDefinition,
 } from "./types";
@@ -12,11 +13,14 @@ export interface ValidatableConcept {
   lesson: LessonDefinition;
   equations: readonly EquationDefinition[];
   calculators?: readonly CalculatorDefinition[];
-  experiments: readonly ExperimentDefinition<Record<string, number>>[];
+  formula?: FeaturedFormula;
+  missions: readonly MissionDefinition<never>[];
   defaultParameters: Readonly<Record<string, number>>;
   parameterDefinitions: readonly ParameterDefinition[];
   visualLayers: readonly VisualLayerDefinition[];
   readoutIds: readonly string[];
+  /** Widget keys the concept provides. */
+  widgetIds: readonly string[];
 }
 
 const duplicates = (ids: readonly string[]) => ids.filter((id, i) => ids.indexOf(id) !== i);
@@ -25,44 +29,45 @@ const duplicates = (ids: readonly string[]) => ids.filter((id, i) => ids.indexOf
 export function validateConcept(c: ValidatableConcept): string[] {
   const errors: string[] = [];
   const eqIds = c.equations.map((e) => e.id);
-  for (const d of duplicates(eqIds)) errors.push(`Duplicate equation id "${d}"`);
-  for (const d of duplicates(c.lesson.sections.map((s) => s.id)))
-    errors.push(`Duplicate section id "${d}"`);
-  for (const d of duplicates(c.visualLayers.map((l) => l.id)))
-    errors.push(`Duplicate layer id "${d}"`);
-  for (const d of duplicates(c.experiments.map((e) => e.id)))
-    errors.push(`Duplicate experiment id "${d}"`);
+  const calcIds = (c.calculators ?? []).map((x) => x.id);
+  const dup = (label: string, ids: readonly string[]) =>
+    duplicates(ids).forEach((d) => errors.push(`Duplicate ${label} id "${d}"`));
+  dup("equation", eqIds);
+  dup(
+    "chapter",
+    c.lesson.story.map((s) => s.id),
+  );
+  dup(
+    "layer",
+    c.visualLayers.map((l) => l.id),
+  );
+  dup(
+    "mission",
+    c.missions.map((m) => m.id),
+  );
+  dup("readout", c.readoutIds);
 
-  for (const s of c.lesson.sections)
-    for (const id of s.equationIds ?? [])
-      if (!eqIds.includes(id)) errors.push(`Section "${s.id}" references unknown equation "${id}"`);
-
+  for (const ch of c.lesson.story) {
+    if (ch.widget && !c.widgetIds.includes(ch.widget))
+      errors.push(`Chapter "${ch.id}" uses unknown widget "${ch.widget}"`);
+    if (ch.quiz && !(ch.quiz.answerIndex in ch.quiz.choices))
+      errors.push(`Chapter "${ch.id}" quiz answerIndex out of range`);
+  }
   for (const calc of c.calculators ?? [])
     if (!eqIds.includes(calc.equationId))
       errors.push(`Calculator "${calc.id}" references unknown equation "${calc.equationId}"`);
-
-  const params = new Map(c.parameterDefinitions.map((p) => [p.key, p]));
-  const inRange = (key: string, v: number, where: string) => {
-    const p = params.get(key);
-    if (!p) errors.push(`${where}: unknown parameter "${key}"`);
-    else if (v < p.min || v > p.max)
-      errors.push(`${where}: ${key}=${v} outside [${p.min}, ${p.max}]`);
-  };
+  if (c.formula) {
+    if (!eqIds.includes(c.formula.equationId))
+      errors.push(`Formula references unknown equation "${c.formula.equationId}"`);
+    if (!calcIds.includes(c.formula.calculatorId))
+      errors.push(`Formula references unknown calculator "${c.formula.calculatorId}"`);
+  }
   for (const p of c.parameterDefinitions) {
     if (!(p.min < p.max)) errors.push(`Parameter "${p.key}" has min >= max`);
     const v = c.defaultParameters[p.key];
     if (v === undefined) errors.push(`Parameter "${p.key}" has no default`);
-    else inRange(p.key, v, "Default");
-  }
-
-  for (const ex of c.experiments) {
-    for (const [k, v] of Object.entries(ex.setup))
-      if (v !== undefined) inRange(k, v, `Experiment "${ex.id}"`);
-    if (ex.choices && ex.answerIndex !== undefined && !(ex.answerIndex in ex.choices))
-      errors.push(`Experiment "${ex.id}" answerIndex out of range`);
-    for (const w of ex.watch ?? [])
-      if (!c.readoutIds.includes(w))
-        errors.push(`Experiment "${ex.id}" watches unknown readout "${w}"`);
+    else if (v < p.min || v > p.max)
+      errors.push(`Default: ${p.key}=${v} outside [${p.min}, ${p.max}]`);
   }
   return errors;
 }

@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { sampleTrajectory, type SceneProps } from "@orbital/core";
 import { length, scale, type TwoBodyState } from "@orbital/physics";
 import {
-  CelestialBody,
   Follow,
+  SketchGlobe,
   Label,
   Marker,
   SceneCanvas,
@@ -14,8 +14,16 @@ import {
   VectorArrow,
   physicsToScene,
   useSimulationLoop,
+  useThemeColors,
 } from "@orbital/rendering";
-import { BODY_RADIUS, MU, createModel, initialElements, type OrbitalMotionParams } from "./model";
+import {
+  BODY_RADIUS,
+  MU,
+  createModel,
+  initialElements,
+  radiusOf,
+  type OrbitalMotionParams,
+} from "./model";
 
 /** 1 scene unit = 1000 km. */
 const M_PER_UNIT = 1e6;
@@ -25,6 +33,8 @@ type Props = SceneProps<TwoBodyState, OrbitalMotionParams>;
 
 function Simulation({ engine, params, layers }: Props) {
   useSimulationLoop(engine);
+  const { ink, paper, muted } = useThemeColors();
+  const r0 = radiusOf(params);
   const el = useMemo(() => initialElements(params), [params]);
 
   const predicted = useMemo(() => {
@@ -32,7 +42,7 @@ function Simulation({ engine, params, layers }: Props) {
     const bound = Number.isFinite(el.period);
     const steps = 1440;
     const dt = bound ? el.period / steps : 60;
-    const limit = 8 * params.r0;
+    const limit = 8 * r0;
     return sampleTrajectory(
       model,
       {
@@ -53,9 +63,9 @@ function Simulation({ engine, params, layers }: Props) {
   );
 
   // Vector display scales: circular speed / gravity at r0 map to 35% of r0 on screen.
-  const r0Units = params.r0 / M_PER_UNIT;
-  const vScale = (0.35 * r0Units) / Math.sqrt(MU / params.r0);
-  const aScale = (0.35 * r0Units) / (MU / params.r0 ** 2);
+  const r0Units = r0 / M_PER_UNIT;
+  const vScale = (0.35 * r0Units) / Math.sqrt(MU / r0);
+  const aScale = (0.35 * r0Units) / (MU / r0 ** 2);
 
   const position = () => toScene(engine.snapshot().state.position);
   const eHat = el.eccentricity > 1e-3 ? scale(el.eccentricityVector, 1 / el.eccentricity) : null;
@@ -64,31 +74,28 @@ function Simulation({ engine, params, layers }: Props) {
 
   return (
     <>
-      <CelestialBody radius={BODY_RADIUS / M_PER_UNIT} color="#2b6cb0" emissive="#0a1a33">
-        {layers.labels && <Label offsetY={BODY_RADIUS / M_PER_UNIT + 0.4}>Earth</Label>}
-      </CelestialBody>
-      {layers.orbit && <Trajectory points={predicted} color="#4cc9f0" dashed opacity={0.6} />}
-      {layers.trail && (
-        <Trail get={position} color="#f4a261" resetKey={resetCount} maxPoints={4000} />
-      )}
+      <SketchGlobe radius={BODY_RADIUS / M_PER_UNIT} ink={ink} paper={paper} />
+      {layers.labels && <Label offsetY={BODY_RADIUS / M_PER_UNIT + 0.6}>Earth</Label>}
+      {layers.orbit && <Trajectory points={predicted} color={muted} dashed opacity={0.9} />}
+      {layers.trail && <Trail get={position} color={ink} resetKey={resetCount} maxPoints={4000} />}
       {layers.apsides && peri && (
-        <Marker position={peri} color="#80ffdb" size={0.15}>
-          {layers.labels && <Label>Periapsis</Label>}
+        <Marker position={peri} color={ink} size={0.15}>
+          {layers.labels && <Label>closest</Label>}
         </Marker>
       )}
       {layers.apsides && apo && (
-        <Marker position={apo} color="#ff8fab" size={0.15}>
-          {layers.labels && <Label>Apoapsis</Label>}
+        <Marker position={apo} color={ink} size={0.15}>
+          {layers.labels && <Label>farthest</Label>}
         </Marker>
       )}
       <Follow get={position}>
-        <Marker color="#ffffff" size={0.18}>
-          {layers.labels && <Label>Orbiter</Label>}
+        <Marker color={ink} size={0.22}>
+          {layers.labels && <Label>you</Label>}
         </Marker>
       </Follow>
       {layers.velocity && (
         <VectorArrow
-          color="#90e0ef"
+          color={ink}
           get={() => {
             const s = engine.snapshot().state;
             return {
@@ -100,7 +107,7 @@ function Simulation({ engine, params, layers }: Props) {
       )}
       {layers.acceleration && (
         <VectorArrow
-          color="#ffb703"
+          color={muted}
           get={() => {
             const s = engine.snapshot().state;
             return {
@@ -112,7 +119,7 @@ function Simulation({ engine, params, layers }: Props) {
       )}
       {layers.radius && (
         <VectorArrow
-          color="#b8b8ff"
+          color={muted}
           get={() => ({ origin: [0, 0, 0], vector: toScene(engine.snapshot().state.position) })}
         />
       )}
@@ -121,13 +128,9 @@ function Simulation({ engine, params, layers }: Props) {
 }
 
 export default function OrbitalMotionScene(props: Props) {
+  const apo = initialElements(props.params).apoapsis;
   const extent =
-    Math.min(
-      Number.isFinite(initialElements(props.params).apoapsis)
-        ? initialElements(props.params).apoapsis
-        : 3 * props.params.r0,
-      9e7,
-    ) / M_PER_UNIT;
+    Math.min(Number.isFinite(apo) ? apo : 3 * radiusOf(props.params), 9e7) / M_PER_UNIT;
   return (
     <SceneCanvas className="h-full w-full" cameraPosition={[0, 1.4 * extent, 1.1 * extent]}>
       <Simulation {...props} />

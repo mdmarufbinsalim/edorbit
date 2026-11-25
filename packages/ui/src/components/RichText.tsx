@@ -1,17 +1,21 @@
 import { Equation } from "../equations/Equation";
 
-/** Renders plain text with `$inline math$` segments typeset by KaTeX. */
+/** Plain text with `$inline math$` (KaTeX) and `**bold**` segments. */
 export function RichText({ text }: { text: string }) {
-  const parts = text.split(/(\$[^$]+\$)/g);
+  const parts = text.split(/(\$[^$]+\$|\*\*[^*]+\*\*)/g);
   return (
     <>
-      {parts.map((part, i) =>
-        part.startsWith("$") && part.endsWith("$") && part.length > 2 ? (
-          <Equation key={i} latex={part.slice(1, -1)} display={false} />
-        ) : (
-          <span key={i}>{part}</span>
-        ),
-      )}
+      {parts.map((part, i) => {
+        if (part.length > 2 && part.startsWith("$") && part.endsWith("$"))
+          return <Equation key={i} latex={part.slice(1, -1)} display={false} />;
+        if (part.length > 4 && part.startsWith("**") && part.endsWith("**"))
+          return (
+            <strong key={i} className="font-medium text-[var(--ink)]">
+              {part.slice(2, -2)}
+            </strong>
+          );
+        return <span key={i}>{part}</span>;
+      })}
     </>
   );
 }

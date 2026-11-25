@@ -1,79 +1,68 @@
-import { EARTH, G, type CalculatorDefinition } from "@orbital/core";
-import {
-  gravitationalForce,
-  orbitalPeriod,
-  specificOrbitalEnergy,
-  visVivaSpeed,
-} from "@orbital/physics";
+import { EARTH, type CalculatorDefinition, type FeaturedFormula } from "@orbital/core";
+import { circularSpeed, orbitalPeriod } from "@orbital/physics";
 
 const km = 1000;
+const r = (altitudeKm: number) => EARTH.meanRadius + altitudeKm * km;
 
 export const calculators: readonly CalculatorDefinition[] = [
   {
-    id: "gravitation-calc",
-    equationId: "gravitation",
-    title: "Gravitational force calculator",
+    id: "circle-speed",
+    equationId: "circular-speed",
+    title: "Circle speed playground",
     inputs: [
-      { key: "M", label: "Central mass M", unit: "kg", defaultValue: EARTH.mass },
-      { key: "m", label: "Orbiter mass m", unit: "kg", defaultValue: 1000, min: 0 },
-      { key: "r", label: "Distance r", unit: "km", defaultValue: 6771, min: 1 },
-    ],
-    outputs: [
-      { label: "F", unit: "N", compute: ({ M, m, r }) => gravitationalForce(M!, m!, r! * km) },
-      { label: "g = GM/r²", unit: "m/s²", compute: ({ M, r }) => (G * M!) / (r! * km) ** 2 },
-    ],
-  },
-  {
-    id: "vis-viva-calc",
-    equationId: "vis-viva",
-    title: "Vis-viva calculator (Earth)",
-    inputs: [
-      { key: "r", label: "Distance r", unit: "km", defaultValue: 6678, min: 1 },
-      { key: "a", label: "Semi-major axis a", unit: "km", defaultValue: 24421 },
-    ],
-    outputs: [
       {
-        label: "v",
-        unit: "km/s",
-        compute: ({ r, a }) => visVivaSpeed(EARTH.mu, r! * km, a! * km) / km,
-      },
-      {
-        label: "v_circular at r",
-        unit: "km/s",
-        compute: ({ r }) => Math.sqrt(EARTH.mu / (r! * km)) / km,
-      },
-    ],
-  },
-  {
-    id: "kepler-calc",
-    equationId: "kepler-third",
-    title: "Orbital period calculator (Earth)",
-    inputs: [{ key: "a", label: "Semi-major axis a", unit: "km", defaultValue: 6798, min: 1 }],
-    outputs: [
-      { label: "T", unit: "min", compute: ({ a }) => orbitalPeriod(EARTH.mu, a! * km) / 60 },
-      { label: "T", unit: "h", compute: ({ a }) => orbitalPeriod(EARTH.mu, a! * km) / 3600 },
-    ],
-  },
-  {
-    id: "energy-calc",
-    equationId: "energy",
-    title: "Specific energy calculator (Earth)",
-    inputs: [
-      { key: "r", label: "Distance r", unit: "km", defaultValue: 6798, min: 1 },
-      { key: "v", label: "Speed v", unit: "km/s", defaultValue: 7.657, min: 0 },
-    ],
-    outputs: [
-      {
-        label: "ε",
-        unit: "MJ/kg",
-        compute: ({ r, v }) => specificOrbitalEnergy(EARTH.mu, r! * km, v! * km) / 1e6,
-      },
-      {
-        label: "a = −μ/2ε",
+        key: "h",
+        label: "Height above Earth",
         unit: "km",
-        compute: ({ r, v }) =>
-          -EARTH.mu / (2 * specificOrbitalEnergy(EARTH.mu, r! * km, v! * km)) / km,
+        defaultValue: 420,
+        min: 160,
+        max: 40_000,
+        step: 10,
+      },
+    ],
+    outputs: [
+      {
+        label: "Speed you need",
+        unit: "km/s",
+        compute: ({ h }) => circularSpeed(EARTH.mu, r(h!)) / km,
+        say: (v) => {
+          const kmh = v * 3600;
+          const nyc = (5570 / kmh) * 60;
+          return `That's ${Math.round(kmh).toLocaleString("en-US")} km/h. London to New York in ${nyc < 60 ? `${Math.round(nyc)} minutes` : `${(nyc / 60).toFixed(1)} hours`}.`;
+        },
+      },
+      {
+        label: "One lap takes",
+        unit: "hours",
+        compute: ({ h }) => orbitalPeriod(EARTH.mu, r(h!)) / 3600,
+        say: (t) =>
+          t < 24
+            ? `About ${Math.round(24 / t)} laps every day.`
+            : `Longer than a day: ${(t / 24).toFixed(1)} days per lap.`,
       },
     ],
   },
 ];
+
+export const formula: FeaturedFormula = {
+  equationId: "circular-speed",
+  calculatorId: "circle-speed",
+  tagline: "How fast you must go sideways to keep falling around a planet without hitting it.",
+  symbols: [
+    { symbol: "v", plain: "the speed you need, sideways." },
+    {
+      symbol: "G",
+      plain:
+        "gravity's strength setting for the whole universe. It's tiny: $6.67 \\times 10^{-11}$.",
+    },
+    {
+      symbol: "M",
+      plain: "how heavy the planet is. Heavier planet, stronger pull, so you need more speed.",
+    },
+    {
+      symbol: "r",
+      plain:
+        "how far you are from the planet's **centre**. Farther out, gravity is weaker, so you can go slower.",
+    },
+  ],
+};

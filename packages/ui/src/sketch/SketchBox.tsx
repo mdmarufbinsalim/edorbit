@@ -12,12 +12,15 @@ export function SketchBox({
   padding = 3,
   seed = 7,
   dashed = false,
+  innerClassName = "",
 }: {
   children: ReactNode;
   className?: string;
   padding?: number;
   seed?: number;
   dashed?: boolean;
+  /** Classes for the content wrapper, e.g. `h-full` when children need the box's height. */
+  innerClassName?: string;
 }) {
   const { ref, size } = useElementSize<HTMLDivElement>();
   const d = useMemo(() => {
@@ -52,7 +55,7 @@ export function SketchBox({
           />
         )}
       </svg>
-      <div className="relative">{children}</div>
+      <div className={`relative ${innerClassName}`}>{children}</div>
     </div>
   );
 }

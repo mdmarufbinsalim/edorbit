@@ -12,6 +12,8 @@ export interface ReadoutDefinition<State, Params> {
   /** Numbers are formatted with significant figures; strings are shown as-is. */
   value: (state: State, params: Params) => number | string;
   description?: string;
+  /** Shown by default; others live under "nerd stats". */
+  basic?: boolean;
 }
 
 /**
@@ -28,6 +30,7 @@ export interface DerivedControlDefinition<Params> {
   get: (params: Params) => number;
   set: (value: number, params: Params) => Partial<Params>;
   description?: string;
+  advanced?: boolean;
 }
 
 export interface TimeScaleOption {

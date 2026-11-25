@@ -1,0 +1,14 @@
+{
+  "name": "@orbital/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Concept contracts, simulation lifecycle, and SI units. Framework-agnostic: no React, no Three.js.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  }
+}

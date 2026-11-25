@@ -1,0 +1,22 @@
+{
+  "name": "@orbital/ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared learning UI: equation renderer, parameter controls, lesson layout. No physics.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@orbital/core": "workspace:*",
+    "katex": "^0.19.1",
+    "react": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0"
+  }
+}

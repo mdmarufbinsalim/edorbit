@@ -1,0 +1,29 @@
+{
+  "name": "@orbital/concepts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Concept modules: lesson content, equations, models, scenes, and experiments for each scientific concept.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@orbital/core": "workspace:*",
+    "@orbital/physics": "workspace:*",
+    "@orbital/rendering": "workspace:*",
+    "@orbital/ui": "workspace:*",
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.2",
+    "react": "^19.3.1",
+    "three": "^0.187.0",
+    "zustand": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/three": "^0.187.0"
+  }
+}

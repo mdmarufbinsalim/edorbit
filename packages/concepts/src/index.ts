@@ -1,0 +1,1 @@
+export { conceptRegistry } from "./registry";

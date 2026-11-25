@@ -3,10 +3,10 @@ import { validateConcept } from "@orbital/core";
 import { conceptRegistry } from "./registry";
 
 describe("concept registry", () => {
-  it("registers the five launch concepts with unique slugs", () => {
+  it("registers concepts with unique slugs", () => {
     const slugs = conceptRegistry.list().map((c) => c.metadata.slug);
-    expect(slugs).toHaveLength(5);
-    expect(new Set(slugs).size).toBe(5);
+    expect(slugs.length).toBeGreaterThan(0);
+    expect(new Set(slugs).size).toBe(slugs.length);
   });
 
   it.each(conceptRegistry.list().filter((e) => e.module))(

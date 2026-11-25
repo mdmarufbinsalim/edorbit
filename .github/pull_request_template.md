@@ -5,16 +5,16 @@
 ## Type
 
 - [ ] New concept
-- [ ] Concept improvement / scientific correction
+- [ ] Concept improvement / accuracy correction
 - [ ] Platform / shared components
 - [ ] Docs
 
-## Scientific checklist (concepts and physics changes)
+## Content checklist (concepts)
 
-- [ ] Model, assumptions, and units documented
-- [ ] References cited
-- [ ] Validation test against a known result
-- [ ] Idealisations labelled in the UI
+- [ ] Story is short and in plain language (see docs/content-standards.md)
+- [ ] Every claim backed by a tested model or a cited source
+- [ ] Quiz answers and mission hints covered by tests
+- [ ] Simplifications stated on the page
 
 ## Checks
 

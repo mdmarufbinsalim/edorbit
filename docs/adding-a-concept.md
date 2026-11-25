@@ -1,33 +1,37 @@
 # Adding a concept
 
-Use `packages/concepts/src/orbital-motion/` as the reference implementation.
+Any subject is welcome. Use `packages/concepts/src/orbital-motion/` as the reference implementation, and read [content-standards.md](content-standards.md) first.
 
-## 1. Create the directory
+## 1. Propose it
+
+Open a "New concept" issue: the hook question, the 2–4 chapter story, the widgets, and the sources or models you will rely on.
+
+## 2. Create the directory
 
 ```
 packages/concepts/src/<slug>/
-├── metadata.ts      ConceptMetadata (title, question, difficulty, …)
-├── lesson.ts        LessonDefinition: intro, sections, objectives, limitations
-├── equations.ts     EquationDefinition[] with variables, units, assumptions, worked examples
-├── calculators.ts   CalculatorDefinition[] bound to equation ids (optional)
-├── model.ts         Parameters type + createModel() returning a ScientificModel
-├── simulation.ts    SimulationSpec: parameters, derived controls, layers, readouts, timestep
-├── experiments.ts   ExperimentDefinition[]: setup, prediction choices, explanation
-├── references.ts    ScientificReference[]
-├── scene.tsx        Default-exported R3F scene receiving { engine, params, layers }
-├── index.ts         defineConcept({...}) with Scene: lazy(() => import("./scene"))
-└── <slug>.test.ts   Validation tests for the physics claims in your lesson and experiments
+├── metadata.ts      title, hook, subject/category, tags, difficulty, card illustration
+├── lesson.ts        story chapters (+ quizzes) and limitations
+├── widgets/         small hands-on components, one per chapter that needs one
+├── missions.ts      goals with a `check` backed by the model
+├── equations.ts     "for the curious" maths (STEM)
+├── calculators.ts   featured formula + its playground (optional)
+├── model.ts         pure logic or data access for this concept
+├── simulation.ts    playground spec (optional, model-driven concepts)
+├── scene.tsx        3D playground (optional)
+├── references.ts    sources
+├── index.ts         defineConcept({...}) with lazy widgets and scene
+└── <slug>.test.ts   tests for every claim, quiz answer and mission hint
 ```
 
-## 2. Rules
+## 3. Rules
 
-- Physics that could be reused goes in `packages/physics` with tests. `core` and `physics` must not import React or Three.js (lint-enforced).
-- Model state and parameters are in SI units. Convert for display only, using `displayScale` on parameters and unit conversion in readouts and calculators.
-- Scenes read state with `engine.snapshot()` inside per-frame getters (`Follow`, `Trail`, `VectorArrow`). Never put per-frame state in React state.
-- Scenes must not compute physics. Derive what you draw from the model (`sampleTrajectory`, elements helpers).
-- State the model's limitations in `lesson.limitations`. They are shown next to the simulation.
+- Reusable logic goes in a domain package (`packages/physics`, or a new one) with tests and no UI imports.
+- Widgets and scenes display model output. They never invent numbers.
+- Keep the story short. Move depth into "for the curious".
+- No emojis.
 
-## 3. Register it
+## 4. Register it
 
 Add one entry to `packages/concepts/src/registry.ts`:
 
@@ -35,9 +39,9 @@ Add one entry to `packages/concepts/src/registry.ts`:
 { metadata: myConcept.metadata, module: myConcept },
 ```
 
-The registry test runs `validateConcept` on every module. It checks equation references, parameter ranges, experiment setups and readout ids.
+The registry test validates every concept: widget ids, quiz answers, formula references, parameter ranges and unique ids.
 
-## 4. Verify
+## 5. Verify
 
 ```sh
 pnpm typecheck && pnpm lint && pnpm test

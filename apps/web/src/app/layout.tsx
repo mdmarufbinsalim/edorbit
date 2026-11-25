@@ -7,7 +7,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: { default: "Orbital", template: "%s · Orbital" },
   description:
-    "Play with the physics of space. Fire cannons into orbit, slingshot past planets, and see why the Moon makes tides.",
+    "Interactive stories that explain big ideas from science, maths, history and beyond. Drag, try, and see why things work.",
 };
 
 // Light by default; dark is opt-in via the toggle and remembered.

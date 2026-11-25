@@ -6,7 +6,7 @@ export const metadata: ConceptMetadata = {
   title: "Why don't satellites fall down?",
   question: "Why do moons and satellites go round and round instead of crashing or flying away?",
   description: "Fire a cannon into orbit and discover Kepler's three laws.",
-  category: "Orbital mechanics",
+  category: "Physics",
   difficulty: "beginner",
   estimatedMinutes: 20,
   hook: "Spoiler: the space station is falling. All the time.",

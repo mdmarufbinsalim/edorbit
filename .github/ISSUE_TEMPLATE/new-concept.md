@@ -1,15 +1,17 @@
 ---
 name: New concept proposal
-about: Propose a new interactive scientific concept
+about: Propose a new interactive concept from any subject
 labels: concept
 ---
 
-**Question the concept answers**
+**Subject and tags** (e.g. History · printing, communication, Renaissance)
 
-**Scientific coverage and key equations**
+**The hook question**
 
-**Proposed interactive simulation**
+**The story (2–4 short chapters)**
 
-**Experiments**
+**Widgets: what will learners drag, try or break?**
 
-**References**
+**Missions**
+
+**Model or sources the concept relies on**

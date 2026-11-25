@@ -12,7 +12,7 @@ export function Hero() {
         transition={{ duration: 0.7, delay: 0.14 }}
         className="mb-4 text-sm tracking-wide text-muted"
       >
-        Space physics you can{" "}
+        Big ideas you can{" "}
         <SketchCircle delay={1.1} paddingX={10} paddingY={6} className="mx-2">
           play with
         </SketchCircle>
@@ -23,9 +23,9 @@ export function Hero() {
         transition={{ duration: 0.84, delay: 0.28 }}
         className="max-w-4xl text-4xl leading-tight font-medium sm:text-6xl"
       >
-        Throw things into space and{" "}
+        Learn how things work by{" "}
         <span className="relative inline-block">
-          see what happens
+          poking at them
           <SketchUnderline
             className="absolute -bottom-2 left-0"
             width={360}

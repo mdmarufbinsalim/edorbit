@@ -15,9 +15,11 @@ Rules for AI coding agents (Claude Code, Codex, Copilot, etc.) working in this r
 
 ## Architecture boundaries
 
-- `packages/core` and `packages/physics` must never import React, Three.js, or `@orbital/{ui,rendering,concepts}`. ESLint enforces this.
-- Rendering code displays simulation state; it never computes physics.
-- Physics runs in SI units. Scale for display in the rendering layer only.
+- Orbital covers concepts from any subject (STEM, history, arts, …), not just physics. Keep shared code subject-agnostic.
+- `packages/core` and domain packages (`packages/physics`, future `packages/<domain>`) must never import React, Three.js, or `@orbital/{ui,rendering,concepts}`. ESLint enforces this.
+- Widgets and scenes display model or source data; they never compute or invent results.
+- Numerical models use SI units internally. Scale for display only.
+- Content is for teens and early learners: short, plain language, no emojis. See docs/content-standards.md.
 - The app shell (`apps/web`) contains no concept-specific logic.
 
 See [docs/architecture.md](docs/architecture.md) and [checklist.md](checklist.md).

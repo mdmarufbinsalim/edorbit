@@ -1,6 +1,6 @@
 # Contributing to ORBITAL
 
-Thanks for helping make science something people can see, manipulate, and understand.
+Thanks for helping make big ideas, from any subject, something people can see, poke at and understand.
 
 ## Setup
 
@@ -21,9 +21,9 @@ pnpm typecheck && pnpm lint && pnpm test
 
 Each concept lives in its own directory under `packages/concepts/src/<slug>/` and is registered with one line in `packages/concepts/src/registry.ts`. You should not need to change the app shell or any other concept. The full guide is in [docs/adding-a-concept.md](docs/adding-a-concept.md).
 
-## Scientific standards
+## Content standards
 
-Every concept must state its mathematical model, assumptions, and units, cite reliable references, and include at least one numerical validation test. See [docs/scientific-standards.md](docs/scientific-standards.md). Scientific accuracy is part of code review.
+Concepts can come from any subject: STEM, history, the arts and more. Every claim must be backed by a tested model or a cited source. Simplifications must be stated on the page, and the story must stay short. See [docs/content-standards.md](docs/content-standards.md). Accuracy is part of code review.
 
 ## Contribution safety
 

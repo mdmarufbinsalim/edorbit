@@ -1,32 +1,44 @@
 # Architecture
 
-ORBITAL separates _what is true_ (physics) from _how it is shown_ (rendering) and _how it is taught_ (lessons).
+Orbital separates **what is true** (models and data), **how it is shown** (rendering and widgets) and **how it is taught** (the story). That separation is what lets a physics concept and a history concept share one platform.
 
 ## Packages and allowed dependencies
 
 ```
 apps/web ──► concepts ──► ui, rendering ──► core
                  │                            ▲
-                 └──────► physics ────────────┘
+                 └──────► domain packages ────┘   (physics today; maths, history, … later)
 ```
 
-| Package              | Responsibility                                                 | May import                            |
-| -------------------- | -------------------------------------------------------------- | ------------------------------------- |
-| `@orbital/core`      | Concept contracts, simulation clock/engine, SI units           | nothing internal                      |
-| `@orbital/physics`   | Pure models, integrators, validation                           | `core`                                |
-| `@orbital/rendering` | R3F components: bodies, trails, vectors, labels, cameras       | `core`, React, Three.js               |
-| `@orbital/ui`        | Equations, controls, lesson layout                             | `core`, React                         |
-| `@orbital/concepts`  | Concept modules (lesson, equations, model, scene, experiments) | all of the above                      |
-| `apps/web`           | Routing, layout, discovery, theme                              | `concepts`, `ui`, `rendering`, `core` |
+| Package              | Responsibility                                                     | May import                            |
+| -------------------- | ------------------------------------------------------------------ | ------------------------------------- |
+| `@orbital/core`      | Concept contract, validation, simulation engine, units, formatting | nothing internal                      |
+| `@orbital/physics`   | Pure physics models and integrators (first domain package)         | `core`                                |
+| `@orbital/rendering` | Reusable R3F components                                            | `core`, React, Three.js               |
+| `@orbital/ui`        | Sketch design system, story components, controls                   | `core`, React                         |
+| `@orbital/concepts`  | Concept modules: story, widgets, models, scenes, missions          | all of the above                      |
+| `apps/web`           | Routing, layout, discovery, theme                                  | `concepts`, `ui`, `rendering`, `core` |
 
-`core` and `physics` must never import React, Three.js, or UI packages. ESLint (`no-restricted-imports`) enforces this.
+**Domain packages** (`physics`, and later `maths`, `history`, …) contain pure, tested logic or data. They must never import React, Three.js or UI packages. ESLint enforces this for `core` and `physics` today. Generalising the rule to every domain package is tracked in the checklist.
 
-## Simulation loop
+## The concept contract
 
-Rendering runs at display frame rate; physics runs on a fixed timestep driven by `SimulationClock`. Each frame the clock converts elapsed real time × time scale into a whole number of physics steps. Physics state lives outside React state so animation does not trigger rerenders.
+A concept is a `ConceptModule` registered in `packages/concepts/src/registry.ts`:
+
+- `metadata`: title, hook, subject, tags, difficulty, card illustration.
+- `lesson.story`: short chapters, each with an optional widget and quiz. `lesson.limitations` lists what the concept simplifies.
+- `widgets`: small lazily loaded React components used by chapters.
+- `formula` + `calculators`: the featured idea and its playground.
+- `simulation` + `Scene`: an optional model-driven playground (being made optional for non-numerical subjects).
+- `missions`: goals checked against real model output.
+- `equations`, `references`: the "for the curious" material.
+
+The app shell renders any module generically and contains no concept-specific logic.
+
+## Simulation loop (for model-driven concepts)
+
+Rendering runs at display frame rate. Models run on a fixed timestep driven by `SimulationClock`. Per-frame state lives outside React. Components read `engine.snapshot()` in frame callbacks, and readouts poll at a modest rate.
 
 ## Units
 
-Physics uses SI units exclusively. Rendering converts metres to scene units with an explicit scale. Physical values are never altered for visual convenience.
-
-_This document will be expanded during Phase 1._
+Numerical models use SI units internally and convert only for display. Values are never altered to make a visual more convenient.

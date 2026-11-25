@@ -1,182 +1,114 @@
-# ORBITAL — Development Checklist
+# Orbital — Development Checklist
 
-Tracks implementation of the ORBITAL specification. Tick items as they land on `main`.
+Orbital is an open-source platform of **interactive concepts from any field**: physics, maths, computer science, chemistry, biology, history, economics, music and beyond. Each concept is a short, playful story for teens and early learners. You drag, try, predict and break things, and it is all backed by real models and real sources.
+
+Orbital Motion is the first concept and the reference implementation. It is not the scope of the platform.
 
 Legend: `[x]` done · `[ ]` to do
 
 ---
 
-## Phase 0 — Repository initialisation
+## Phase 0 — Repository initialisation ✅
 
-- [x] pnpm workspace (`apps/*`, `packages/*`)
-- [x] Next.js (App Router) app in `apps/web`
-- [x] TypeScript strict mode, shared `tsconfig.base.json`
-- [x] Tailwind CSS v4 (plain Tailwind, no component kit) with space theme tokens
-- [x] Three.js, React Three Fiber, Drei, Zustand, Framer Motion, KaTeX installed
-- [x] Vitest (node + jsdom projects), React Testing Library, Playwright
-- [x] ESLint (typescript-eslint, react-hooks, Next) + Prettier
-- [x] Lint rule: `core` and `physics` cannot import React / Three.js / UI packages
-- [x] Package skeletons: `core`, `physics`, `rendering`, `ui`, `concepts`
-- [x] Concept registry with metadata for all five launch concepts
-- [x] Discovery page and statically generated `/concepts/[slug]` route
-- [x] MIT licence, README, CONTRIBUTING, Code of Conduct, AGENTS.md
-- [x] CI workflow (typecheck, lint, test, build)
-- [x] PR template and issue templates
+- [x] pnpm workspace (`apps/*`, `packages/*`), Next.js App Router, TypeScript strict
+- [x] Tailwind CSS v4, Three.js / R3F / Drei, Zustand, Framer Motion, KaTeX
+- [x] Vitest, React Testing Library, Playwright, ESLint, Prettier
+- [x] Lint boundary: pure model packages cannot import React / Three.js / UI
+- [x] MIT licence, README, CONTRIBUTING, Code of Conduct, AGENTS.md, CI, templates
 
-## Phase 1 — Platform foundation
+## Phase 1 — Platform foundation ✅
 
-> Design/UX is intentionally minimal in Phase 1–2; a dedicated design pass will follow. Components keep styling in thin Tailwind class layers so they can be restyled without touching logic.
+- [x] Concept contract (`ConceptModule`), registry, `defineConcept`, runtime validation
+- [x] Framework-agnostic simulation engine: fixed-timestep clock, play/pause/reset/step, snapshots
+- [x] Zustand controller wiring parameters to models; per-frame state stays out of React
+- [x] Numerical integrators (Velocity Verlet, leapfrog, RK4) with conservation tests
+- [x] Web Worker propagation protocol, trajectory sampling
+- [x] Units, constants, formatting helpers
+- [x] Shared R3F components: sketch globe, trail, trajectory, vectors, labels, WebGL fallback
+- [x] Generic learning page that renders any concept with no concept-specific logic
 
-### Contracts (`@orbital/core`)
+## Phase 2 — First concept and the teen-first experience ✅
 
-- [x] `ConceptMetadata`, `EquationDefinition`, `LessonDefinition`, `ParameterDefinition`, `ExperimentDefinition`, `ScientificReference`
-- [x] `ScientificModel<State, Params>` interface
-- [x] `ConceptModule` type in `@orbital/concepts` binding metadata + lesson + equations + model factory + scene + experiments + references
-- [x] Runtime validation of concept definitions (unique ids, equation ids referenced by lessons exist, parameter defaults within range)
+- [x] Paper-and-ink sketch design system (themes, hand-drawn primitives, Lenis, transitions)
+- [x] Story format: hook → short chapters with widgets and quizzes → featured formula → playground → missions → "for the curious"
+- [x] Self-checking missions, tap-a-symbol formula playground, quiz cards
+- [x] **Orbital Motion**: Newton's cannon, equal-time dots, planet years, 3D playground, 4 missions
+- [x] Tests that verify every mission hint, quiz answer and story claim
 
-### Units (`@orbital/core/units`)
+## Phase 3 — Make the platform subject-agnostic
 
-- [x] SI type aliases, physical constants (G, AU, Earth, Moon, Sun)
-- [x] Display conversions (km, Earth radii, hours, days)
-- [x] Unit-aware formatting helpers for readouts (significant figures, scientific notation)
+The contract still assumes every concept is a numerical simulation. Generalise it so a history or music concept is just as first-class.
 
-### Simulation lifecycle (`@orbital/core/simulation`)
+### Contract
 
-- [x] Fixed-timestep `SimulationClock` with time scale and step cap
-- [x] `SimulationEngine`: play / pause / reset / step-forward / snapshot
-- [x] Parameter change → model re-initialisation contract
-- [x] Zustand store factory for per-concept simulation + UI state
-- [x] `useSimulationLoop` hook driving the engine from R3F `useFrame` without React rerenders
-- [x] Web Worker path for expensive models
+- [ ] Make `simulation` and `Scene` optional. A concept can be story + widgets + missions only
+- [ ] Missions that check widget state or answers, not only simulation parameters
+- [ ] Rename science-specific types to neutral ones, keeping deprecated aliases: `ScientificModel` → `Model`, `ScientificReference` → `Source`
+- [ ] `Source` supports primary vs secondary sources, archives, dates, page/section, and licence
+- [ ] Subject taxonomy: `subject` (e.g. Physics, History, Music) + `topics[]`, replacing free-text `category`
+- [ ] Optional `era`/`date` metadata for historical concepts
+- [ ] Validation covers the new fields; registry test runs it for every concept
 
-### Numerical integration (`@orbital/physics/integration`)
+### Domain packages
 
-- [x] Velocity Verlet
-- [x] Leapfrog (kick-drift-kick)
-- [x] RK4
-- [x] Energy-drift tests against analytical circular/elliptical orbits
-- [x] Document stability and timestep limits in `docs/scientific-standards.md`
+- [ ] Convention: one pure package per domain (`packages/physics`, then e.g. `packages/maths`, `packages/history`), with the same no-React/no-Three rule
+- [ ] Generalise the ESLint boundary from `core`/`physics` to every domain package via a glob
+- [ ] Shared "content data" pattern for non-numeric domains (dated events, places, people, quotations with citations)
 
-### Equation rendering (`@orbital/ui/equations`)
+### Widget kit (reusable, non-simulation)
 
-- [x] `Equation` component (KaTeX)
-- [x] `EquationCard`: name, description, variable table, units, assumptions, validity
-- [x] Interactive calculator: inputs bound to variables, live result
-- [x] Worked-example block
+- [ ] Timeline (scrub through dated events)
+- [ ] Map with sketch markers and routes
+- [ ] Before/after compare slider
+- [ ] Ordering / sorting challenge ("put these in order")
+- [ ] Step-through diagram (click next to reveal each stage)
+- [ ] Prediction card (guess, then reveal)
+- [ ] Audio-friendly widget hooks (for music and language concepts)
 
-### Learning page (`@orbital/ui/lesson` + `apps/web`)
+### Discovery
 
-- [x] Section layout: introduction → explanation → mathematics → simulation → experiments → references
-- [x] Desktop: large simulation area + contextual control panel; mobile: stacked
-- [x] In-page section navigation
-- [x] "Idealised model" limitation callout component
+- [ ] Tag system: curated tag vocabulary (subject, topic, skill, era), tags on every concept, validated against the vocabulary
+- [ ] Filter the discovery page by tag; tag chips on cards and concept pages link to filtered views
+- [ ] Rich hand-drawn card illustrations (multi-stroke, animated, per concept) instead of single-path doodles
+- [ ] Browse and filter by subject; subject landing pages
+- [ ] Search across titles, hooks and topics
+- [ ] "Related concepts" links between subjects (e.g. orbital motion ↔ the history of Kepler)
 
-### Shared controls (`@orbital/ui/controls`)
+### Standards
 
-- [x] Parameter slider (keyboard accessible, unit display)
-- [x] Simulation toolbar (play/pause, reset, step, speed)
-- [x] Visual layer toggles
-- [x] Data readout panel
-- [x] Experiment panel (prediction → run → compare)
+- [x] `docs/content-standards.md` replaces the science-only standards
+- [ ] Reading-level guidance and a check for story text (short sentences, define jargon)
+- [ ] Review checklist per domain: numerical validation (STEM), source verification and perspective balance (humanities)
 
-### Rendering (`@orbital/rendering`)
+## Phase 4 — Concept library
 
-- [x] `SceneCanvas` (camera, lights, orbit controls)
-- [x] Linear SI → scene scale helper
-- [x] Celestial body component (shaded sphere, configurable; textures deferred to design pass)
-- [x] Trajectory / trail line
-- [x] Vector arrow (force, velocity, acceleration)
-- [x] Labels and annotations
-- [x] Starfield background
-- [x] WebGL-unavailable fallback
-- [x] Lazy loading of scenes and textures
-- [x] Texture attribution file (`docs/assets.md`)
+Candidates, not commitments. Each needs a proposal issue first.
 
-**Deliverable:** application shell with one reusable concept implementation. ✅ (Orbital Motion)
+- [ ] Maths: why there are infinitely many primes; Pythagoras by rearranging squares
+- [ ] Computer science: how sorting algorithms race; binary counting
+- [ ] Chemistry: why ice floats
+- [ ] Biology: natural selection with a population you breed
+- [ ] History: how the printing press spread ideas across Europe
+- [ ] Economics: supply and demand at a lemonade stand
+- [ ] Music: why some notes sound good together (frequency ratios)
+- [ ] Geography / Earth science: why we have seasons
 
-## Phase 2 — First two complete concepts
+## Phase 5 — Open-source release
 
-### 4.1 Orbital Motion and Kepler's Laws
-
-- [x] Lesson content and learning objectives
-- [x] Equations: $F = GMm/r^2$, vis-viva, Kepler's third law
-- [x] Physics: two-body propagation, state ↔ orbital elements (a, e, periapsis, apoapsis, period)
-- [x] Tests: circular orbit period, vis-viva at periapsis/apoapsis, energy and angular momentum conservation
-- [x] Scene: central body, orbiter, trajectory, velocity/acceleration vectors, apsis markers
-- [x] Controls: initial position, velocity, eccentricity
-- [x] Readouts: period, speed, r, energy, h
-- [x] Experiments (≥3), e.g. equal-areas demonstration, doubling a
-- [x] References
-
-### 4.2 Escape Velocity and Gravitational Binding Energy
-
-> Deferred: Phase 2 was scoped to one concept for this pass.
-
-- [ ] Lesson content
-- [ ] Equations: $v_{esc} = \sqrt{2GM/r}$, $U = -GMm/r$, $\varepsilon = v^2/2 - \mu/r$
-- [ ] Physics: trajectory classification (impact / bound / parabolic / hyperbolic), reusing orbital-motion model
-- [ ] Tests: Earth surface escape ≈ 11.19 km/s, ε = 0 at escape speed
-- [ ] Scene: planet, launch point, trajectories, potential well visualisation
-- [ ] Readouts: specific orbital energy, bound/unbound threshold
-- [ ] Experiments
-- [ ] References
-
-- [ ] Architecture review: confirm concept 2 needed no shell changes
-
-## Phase 3 — Remaining concepts
-
-### 4.3 Hohmann Transfer
-
-- [ ] Lesson, equations ($a_t$, $t_t$, Δv₁, Δv₂)
-- [ ] Physics + tests (LEO → GEO Δv ≈ 3.9 km/s total)
-- [ ] Scene: initial/target/transfer orbits, burn markers, before/after velocity vectors
-- [ ] Controls: r₁, r₂, burn triggers
-- [ ] Assumption callout: coplanar, circular, impulsive
-- [ ] Experiments, references
-
-### 4.4 Gravity Assist
-
-- [ ] Lesson, equations (hyperbolic excess velocity, turn angle)
-- [ ] Physics: patched-conic flyby, frame transforms + tests (|v∞,in| = |v∞,out|)
-- [ ] Scene: moving planet, hyperbolic trajectory, vectors in both frames
-- [ ] Frame switch: planet-relative ↔ heliocentric (made very explicit in UI)
-- [ ] Readouts: speed and energy before/after
-- [ ] Experiments, references
-
-### 4.5 Tidal Forces
-
-- [ ] Lesson: differential acceleration, correct far-side bulge explanation
-- [ ] Equations: $a_{tidal} \approx 2GM_m R_e / d^3$, $\propto 1/d^3$
-- [ ] Physics: tidal acceleration field, equilibrium tide, Sun + Moon superposition + tests
-- [ ] Scene: Earth, Moon, exaggerated (labelled) bulges, vector field, Earth rotation
-- [ ] Toggles: Moon / Sun contributions, spring / neap configurations
-- [ ] Experiment: "Moon twice as far" → tidal effect × 1/8
-- [ ] Prominent idealised-equilibrium-tide disclaimer
-- [ ] References
-
-## Phase 4 — Open-source release
-
-- [ ] `docs/architecture.md` complete
-- [ ] `docs/adding-a-concept.md` with a worked example
-- [ ] `docs/scientific-standards.md` complete
-- [ ] `docs/development.md` complete
-- [ ] Example contribution: add a sixth concept with zero changes outside `packages/concepts`
-- [ ] Accessibility pass (keyboard, contrast, reduced motion, text alternatives for visuals)
-- [ ] Performance pass (no rerenders in animation loops, instancing, lazy assets)
+- [ ] `docs/adding-a-concept.md` walkthrough with a non-STEM example
+- [ ] Example contribution: add a concept with zero changes outside `packages/concepts` (and its domain package)
+- [ ] Accessibility pass (keyboard, contrast, reduced motion, text alternatives for every widget)
+- [ ] Performance pass (lazy widgets and scenes, no per-frame React renders)
 - [ ] Playwright coverage for every concept page (desktop + mobile)
-- [ ] Public deployment + automated deploy from `main`
+- [ ] Public deployment with automated deploys from `main`
+- [ ] Texture/asset attribution kept current in `docs/assets.md`
 
-## Definition of done (initial release)
+## Definition of done (first public release)
 
-- [ ] All five concepts reachable from discovery page
-- [ ] Every concept has a meaningful explanation
-- [ ] Equations render correctly with explained variables
-- [ ] All five concepts have interactive simulations
-- [ ] At least two concepts are especially polished
-- [ ] Parameters drive real scientific calculations
-- [ ] Models have automated tests and validation cases
-- [ ] Idealised models clearly distinguished from reality
+- [ ] At least three concepts from at least three different subjects
+- [ ] At least one concept with no numerical simulation
+- [ ] Every concept follows the story format and stays short
+- [ ] Every claim is backed by a test (STEM) or a cited source (all subjects)
+- [ ] Idealisations and simplifications are stated on the page
 - [ ] Works on modern desktop and mobile browsers
-- [ ] Codebase public
-- [ ] Contribution docs complete
-- [ ] New concept addable without touching core or existing concepts
+- [ ] A contributor can add a concept without touching the app shell or other concepts

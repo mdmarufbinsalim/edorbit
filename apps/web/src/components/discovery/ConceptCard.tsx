@@ -36,7 +36,7 @@ export function ConceptCard({
         </svg>
       )}
       <p className="mb-3 text-sm text-muted">
-        {concept.estimatedMinutes} min · {concept.difficulty}
+        {concept.category} · {concept.estimatedMinutes} min · {concept.difficulty}
         {!available && " · coming soon"}
       </p>
       <h3 className="mb-3 text-2xl leading-snug font-medium">{concept.title}</h3>

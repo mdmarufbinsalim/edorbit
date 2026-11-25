@@ -1,16 +1,12 @@
-# ORBITAL
+# Orbital
 
-**Understand the mathematics. Explore the phenomenon. Experiment with the physics.**
+**Big ideas you can poke at.**
 
-ORBITAL is an open-source, browser-based platform for learning science through interactive 3D simulations backed by real mathematical models. The first release covers orbital mechanics and celestial physics:
+Orbital is an open-source platform of interactive concepts from any field: physics, maths, computer science, chemistry, biology, history, economics, music and more. It is written for teens and early learners. Each concept is a short story with things to drag, try and break. Under the hood is a real model or a real source, never a fake animation.
 
-1. Orbital Motion and Kepler's Laws
-2. Escape Velocity and Gravitational Binding Energy
-3. Hohmann Transfer and Orbital Maneuvers
-4. Gravity Assist and Gravitational Slingshot
-5. Tidal Forces
+The first concept, **Why don't satellites fall down?**, is the reference implementation. It has Newton's cannon, Kepler's laws, a 3D playground and missions that check themselves.
 
-> Status: early development. See [checklist.md](checklist.md) for progress.
+> Status: early development. See [checklist.md](checklist.md).
 
 ## Quick start
 
@@ -31,23 +27,34 @@ pnpm dev          # http://localhost:3000
 | `pnpm test:e2e`  | End-to-end tests (Playwright) |
 | `pnpm format`    | Prettier                      |
 
+## How a concept works
+
+Every concept follows the same short arc:
+
+1. **Hook.** A question worth caring about.
+2. **Story.** Two to four tiny chapters, each with a hands-on widget and an optional quiz.
+3. **Featured idea.** One formula, rule or primary source, explained piece by piece.
+4. **Playground.** Free play with the underlying model.
+5. **Missions.** Goals that tick themselves off when you reach them.
+6. **For the curious.** The full maths or sources, simplifications and references, collapsed by default.
+
 ## Repository layout
 
 ```
 apps/web            Next.js app shell: routing, layout, discovery
-packages/core       Concept contracts, simulation clock, SI units (no React/Three)
-packages/physics    Pure scientific models and integrators (no React/Three)
+packages/core       Concept contract, simulation engine, units (no React/Three)
+packages/physics    Pure physics models (a domain package; more domains will follow)
 packages/rendering  Reusable React Three Fiber components
-packages/ui         Equation renderer, controls, lesson layout
-packages/concepts   One directory per scientific concept
-docs/               Architecture, contribution and scientific standards
+packages/ui         Sketch design system, learning components, controls
+packages/concepts   One directory per concept
+docs/               Architecture, contribution and content standards
 ```
 
-The physics layer never depends on React or Three.js; ESLint enforces this boundary. See [docs/architecture.md](docs/architecture.md).
+Domain packages (`physics` today) hold pure, tested models with no UI dependencies. ESLint enforces this boundary. See [docs/architecture.md](docs/architecture.md).
 
 ## Contributing
 
-Contributions of new concepts, corrections, and improvements are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md).
+New concepts from any subject are welcome, as are corrections and improvements. Start with [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/adding-a-concept.md](docs/adding-a-concept.md).
 
 ## Licence
 

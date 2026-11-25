@@ -41,18 +41,18 @@ Legend: `[x]` done · `[ ]` to do
 ### Simulation lifecycle (`@orbital/core/simulation`)
 
 - [x] Fixed-timestep `SimulationClock` with time scale and step cap
-- [ ] `SimulationEngine`: play / pause / reset / step-forward / snapshot
-- [ ] Parameter change → model re-initialisation contract
+- [x] `SimulationEngine`: play / pause / reset / step-forward / snapshot
+- [x] Parameter change → model re-initialisation contract
 - [ ] Zustand store factory for per-concept simulation + UI state
 - [ ] `useSimulationLoop` hook driving the engine from R3F `useFrame` without React rerenders
 - [ ] Web Worker path for expensive models
 
 ### Numerical integration (`@orbital/physics/integration`)
 
-- [ ] Velocity Verlet
-- [ ] Leapfrog (kick-drift-kick)
-- [ ] RK4
-- [ ] Energy-drift tests against analytical circular/elliptical orbits
+- [x] Velocity Verlet
+- [x] Leapfrog (kick-drift-kick)
+- [x] RK4
+- [x] Energy-drift tests against analytical circular/elliptical orbits
 - [ ] Document stability and timestep limits in `docs/scientific-standards.md`
 
 ### Equation rendering (`@orbital/ui/equations`)

@@ -22,21 +22,20 @@ export const metadata: ConceptMetadata = {
   ],
   illustration: {
     viewBox: "0 0 320 200",
-    alt: "A cannon on a mountain at the top of the Earth. One shot curves down and lands. Another, faster one goes all the way round as an orbit.",
+    alt: "A satellite on a dashed circular orbit around Earth. One arrow shows it moving sideways along the orbit, another shows gravity pulling it towards Earth.",
     strokes: [
-      // the orbit: concentric with Earth, passing the cannon's muzzle
-      { d: "M 24 196 A 141 141 0 0 1 296 196", dashed: true },
-      { d: "M 268.5 131.9 L 270 141.8 L 260.7 138.2" },
-      // Earth's horizon
-      { d: "M 44 200 A 120 120 0 0 1 276 200 Z", fill: true },
-      // mountain and cannon
-      { d: "M 146 112 L 160 92 L 174 112", fill: true },
-      { d: "M 156 85 L 174 85 L 174 91 L 156 91 Z", fill: true, width: 2.2 },
-      // a slower shot that lands
-      { d: "M 176 88 Q 199 86 205 119" },
-      // a quiet sky
-      { d: "M 74 50 a 12 12 0 1 1 -24 0 a 12 12 0 1 1 24 0 Z", faint: true, width: 2 },
-      { d: "M 252 34 L 252 46 M 246 40 L 258 40", faint: true, width: 2 },
+      // orbit, well clear of Earth
+      { d: "M 80 100 a 80 80 0 1 1 160 0 a 80 80 0 1 1 -160 0", dashed: true },
+      // Earth
+      { d: "M 118 100 a 42 42 0 1 1 84 0 a 42 42 0 1 1 -84 0 Z", fill: true },
+      // satellite
+      { d: "M 222.6 43.4 a 6 6 0 1 1 -12 0 a 6 6 0 1 1 12 0 Z", width: 3, fill: true },
+      // sideways speed: along the orbit
+      { d: "M 223 50 L 245 72 M 242.4 63.4 L 245 72 L 236.4 69.4" },
+      // gravity: towards Earth
+      { d: "M 210.2 49.8 L 198.2 61.8 M 205.9 59.5 L 198.2 61.8 L 200.6 54.2", faint: true },
+      // one quiet star
+      { d: "M 52 36 L 52 46 M 47 41 L 57 41", faint: true, width: 2 },
     ],
   },
 };
